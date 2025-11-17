@@ -6,32 +6,27 @@ T max(T val)
     return val;
 }
 
-template<typename T, typename ... Ts>
-T max(T first, Ts... rest)
+template<typename T, typename ... Ts> T max(T first, Ts ... rest)
 {
     return first > max(rest...) ? first : max(rest...);
 }
 
-template<typename T>
-T min(T val)
+template<typename T> T min(T val)
 {
     return val;
 }
 
-template<typename T, typename ... Ts>
-T min(T first, Ts ... rest)
+template<typename T, typename ... Ts> T min(T first, Ts ... rest)
 {
     return first < min(rest...) ? first : min(rest...);
 }
 
-template<typename ... Ts>
-double sum(Ts ... rest)
+template<typename ... Ts> double sum(Ts ... rest)
 {
     return (rest + ...);
 }
 
-template<typename ... Ts>
-double average(Ts ... rest)
+template<typename ... Ts> double average(Ts ... rest)
 {
     return sum(rest...) / sizeof...(rest);
 }
