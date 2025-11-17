@@ -1,7 +1,6 @@
 #include <iostream>
 
-template<typename T>
-T max(T val)
+template<typename T> T max(T val)
 {
     return val;
 }
