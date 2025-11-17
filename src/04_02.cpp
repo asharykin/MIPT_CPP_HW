@@ -31,8 +31,8 @@ template<typename ... Ts> double average(Ts ... rest)
 }
 
 int main() {
-    std::cout << "max: " << max(3.5, 7.2, 1.5, 4.8) << std::endl;
-    std::cout << "min: " << min(3.5, 7.2, 1.5, 4.8) << std::endl;
-    std::cout << "sum: " << sum(3.5, 7.2, 1.5, 4.8) << std::endl;
-    std::cout << "average: " << average(3.5, 7.2, 1.5, 4.8) << std::endl;
+    std::cout << "max: " << max(1.1, 2.2, 3.3, 4.4) << std::endl;
+    std::cout << "min: " << min(1.1, 2.2, 3.3, 4.4) << std::endl;
+    std::cout << "sum: " << sum(1.1, 2.2, 3.3, 4.4) << std::endl;
+    std::cout << "average: " << average(1.1, 2.2, 3.3, 4.4) << std::endl;
 }
