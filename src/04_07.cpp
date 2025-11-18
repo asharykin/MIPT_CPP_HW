@@ -87,11 +87,11 @@ int main() {
     static_assert(R8::num == 8);
     static_assert(R8::den == 9);
 
-    Duration<int, R1> duration_1(1);
-    Duration<int, R2> duration_2(2);
-    Duration <int, Ratio <1, 6>> duration_3 = duration_1 + duration_2;
-    assert(duration_3.x == 7);
+    constexpr Duration<int, R1> duration_1(1);
+    constexpr Duration<int, R2> duration_2(2);
+    constexpr Duration <int, Ratio <1, 6>> duration_3 = duration_1 + duration_2;
+    static_assert(duration_3.x == 7);
 
-    Duration<int, Ratio<1, 6>> duration_4 = duration_1 - duration_2;
-    assert(duration_4.x == -1);
+    constexpr Duration<int, Ratio<1, 6>> duration_4 = duration_1 - duration_2;
+    static_assert(duration_4.x == -1);
 }
