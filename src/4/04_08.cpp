@@ -41,7 +41,8 @@ public:
 };
 
 
-int main() {
+int main()
+{
     static_assert(Tuple<int, double, std::string>(1, 2.0, "aaaaa").get<0>() == 1);
     static_assert(Tuple<int, double, std::string>(1, 2.0, "aaaaa").get<1>() == 2.0);
     static_assert(Tuple<int, double, std::string>(1, 2.0, "aaaaa").get<2>() == "aaaaa");
