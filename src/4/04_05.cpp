@@ -23,10 +23,11 @@ template<> struct Fibonacci<1> { static inline int const value = 1; };
 template<int N> int const FibonacciValue = Fibonacci<N>::value;
 
 
-int main() {
-    static_assert(FibonacciValue<2> == 1, "Fibonacci(2) should be 1");
-    static_assert(FibonacciValue<3> == 2, "Fibonacci(3) should be 2");
-    static_assert(FibonacciValue<4> == 3, "Fibonacci(4) should be 3");
-    static_assert(FibonacciValue<5> == 5, "Fibonacci(5) should be 5");
-    static_assert(FibonacciValue<6> == 8, "Fibonacci(6) should be 8");
+int main()
+{
+    static_assert(FibonacciValue<2> == 1);
+    static_assert(FibonacciValue<3> == 2);
+    static_assert(FibonacciValue<4> == 3);
+    static_assert(FibonacciValue<5> == 5);
+    static_assert(FibonacciValue<6> == 8);
 }
