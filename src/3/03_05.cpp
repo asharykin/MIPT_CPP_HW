@@ -73,7 +73,8 @@ public:
     }
 };
 
-int main() {
+int main()
+{
     Client client;
     Entity_v1* ev1 = &client;
     Entity_v2* ev2 = &client;
