@@ -1,16 +1,19 @@
 #include <array>
 
-consteval double compute_e(double eps) {
+consteval double compute_e(double eps)
+{
     double m = 1.0;
     double e = 0.0;
-    for (int i = 1; m >= eps; ++i) {
+    for (int i = 1; m >= eps; ++i)
+    {
         e += m;
         m /= i;
     }
     return e;
 }
 
-int main() {
+int main()
+{
     constexpr std::array epsilons = {0.01, 0.001, 0.0001};
 
     constexpr double e1 = compute_e(epsilons[0]);
