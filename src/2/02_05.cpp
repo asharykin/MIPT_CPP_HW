@@ -1,12 +1,14 @@
 #include <iostream>
 #include <cmath>
 
-double compute_e(double eps) {
+double compute_e(double eps)
+{
     double m = 1.0;
     double e = m;
     int i = 1;
 
-    while (m >= eps) {
+    while (m >= eps)
+    {
         m /= i;
         e += m;
         ++i;
@@ -14,12 +16,14 @@ double compute_e(double eps) {
     return e;
 }
 
-double compute_pi(double eps) {
+double compute_pi(double eps)
+{
     double m = 1.0;
     double pi = m;
     int i = 1;
 
-    while (std::fabs(m) >= eps / 4) {
+    while (std::fabs(m) >= eps / 4)
+    {
         m = (i % 2 == 0 ? 1.0 : -1.0) / (2 * i + 1);
         pi += m;
         ++i;
@@ -27,7 +31,8 @@ double compute_pi(double eps) {
     return 4 * pi;
 }
 
-int main() {
+int main()
+{
     double eps;
     std::cout << "Enter epsilon: " << std::endl;
     std::cin >> eps;
