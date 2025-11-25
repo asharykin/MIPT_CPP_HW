@@ -1,15 +1,18 @@
 #include <iostream>
 
-int main() {
+int main()
+{
     char c;
     std::cin >> c;
 
-    if (c < 32 || c > 127) {
+    if (c < 32 || c > 127)
+    {
         std::cout << "Symbol is out of range 32-127" << std::endl;
         return 0;
     }
 
-    switch (c) {
+    switch (c)
+    {
         case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G': case 'H':
         case 'I': case 'J': case 'K': case 'L': case 'M': case 'N': case 'O': case 'P':
         case 'Q': case 'R': case 'S': case 'T': case 'U': case 'V': case 'W': case 'X':
