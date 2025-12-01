@@ -9,8 +9,7 @@
 class Rational
 {
 public:
-    Rational(int num = 0, int den = 1)
-        : m_num(num), m_den(den)
+    Rational(int num = 0, int den = 1) : m_num(num), m_den(den)
     {
         reduce();
     }
@@ -83,8 +82,6 @@ public:
     {
         return (stream >> rational.m_num).ignore() >> rational.m_den;
     }
-
-    // -------------------------------------------------------------------------------------------
 
     friend auto& operator<<(std::ostream& stream, Rational const& rational)
     {
