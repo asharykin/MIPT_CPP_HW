@@ -70,7 +70,7 @@ public:
 
     friend std::strong_ordering operator<=>(Rational const& lhs, Rational const& rhs)
     {
-        return (lhs.m_num * rhs.m_den) <=> (rhs.m_num * lhs.m_den);
+        return lhs.m_num * rhs.m_den <=> rhs.m_num * lhs.m_den;
     }
 
     friend bool operator==(Rational const& lhs, Rational const& rhs)
