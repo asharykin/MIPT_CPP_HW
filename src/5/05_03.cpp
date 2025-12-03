@@ -269,7 +269,8 @@ void testComposite()
 }
 
 // Used patterns - Abstract Factory (instead of Builder), Composite, Template Method
-int main() {
+int main()
+{
     testGameObjects();
     testUnitActions();
     testComposite();
