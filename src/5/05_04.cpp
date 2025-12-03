@@ -20,7 +20,7 @@ public :
     }
 };
 
-template<typename S> class Entity : private S
+template<typename S> class Entity : public S
 {
 public :
 
