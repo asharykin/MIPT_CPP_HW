@@ -100,7 +100,7 @@ private:
     }
 };
 
-bool equal(double x, double y, double epsilon = 0.00001)
+bool equals(double x, double y, double epsilon = 0.00001)
 {
     return std::abs(x - y) < epsilon;
 }
@@ -111,7 +111,7 @@ int main()
     Rational x(1); // 1/1
     Rational y(2, 1); // 2/1
 
-    assert(equal(static_cast<double>(x), 1.0));
+    assert(equals(static_cast<double>(x), 1.0));
 
     assert((x += y) == Rational(3, 1));
     assert((x -= y) == Rational(1, 1));
