@@ -1,7 +1,8 @@
-#include "rational.h"
 #include <cassert>
 #include <cmath>
 #include <sstream>
+
+#include "rational.hpp"
 
 bool equals(double x, double y, double epsilon = 0.00001)
 {

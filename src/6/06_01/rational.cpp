@@ -1,5 +1,6 @@
-#include "rational.h"
 #include <numeric>
+
+#include "rational.hpp"
 
 void Rational::reduce()
 {
