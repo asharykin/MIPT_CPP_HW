@@ -30,7 +30,7 @@ public :
     }
 };
 
-template<typename T> class Decorator : public T
+template<typename T> class Decorator : private T
 {
 public :
 
