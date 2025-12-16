@@ -10,7 +10,7 @@ public :
     virtual int test() const = 0;
 };
 
-class Client : public Entity
+class Client : public virtual Entity
 {
 public :
 
@@ -20,7 +20,7 @@ public :
     }
 };
 
-class Server : public Entity
+class Server : public virtual Entity
 {
 public :
 
@@ -30,7 +30,7 @@ public :
     }
 };
 
-template<typename T> class Decorator : private T
+template<typename T> class Decorator : public virtual Entity, private T
 {
 public :
 
@@ -43,8 +43,10 @@ public :
 
 int main()
 {
-    Decorator<Client> c;
-    Decorator<Server> s;
-    assert(c.test() == 11);
-    assert(s.test() == 12);
+    Entity* c = new Decorator<Client>();
+    Entity* s = new Decorator<Server>();
+    assert(c->test() == 11);
+    assert(s->test() == 12);
+    delete c;
+    delete s;
 }
