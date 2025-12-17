@@ -12,10 +12,12 @@ int main()
     if (version == "v1")
     {
         path = "libtest_v1/libtest_v1.so";
-    } else if (version == "v2")
+    }
+    else if (version == "v2")
     {
         path = "libtest_v2/libtest_v2.so";
-    } else
+    }
+    else
     {
         std::cerr << "invalid version!" << std::endl;
         return 1;
