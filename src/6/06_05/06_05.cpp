@@ -1,18 +1,22 @@
 #include <iostream>
 #include <boost/dll.hpp>
 
-int main() {
+int main()
+{
     std::string version;
     std::cout << "Enter library version (v1/v2): ";
     std::cin >> version;
 
     std::string path;
 
-    if (version == "v1") {
+    if (version == "v1")
+    {
         path = "libtest_v1/libtest_v1.so";
-    } else if (version == "v2") {
+    } else if (version == "v2")
+    {
         path = "libtest_v2/libtest_v2.so";
-    } else {
+    } else
+    {
         std::cerr << "invalid version!" << std::endl;
         return 1;
     }
