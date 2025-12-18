@@ -67,7 +67,7 @@ void benchmark_sort(benchmark::State& state)
     for (auto element : state)
     {
         sort(vec, threshold);
-        benchmark::DoNotOptimize(vec);
+        // benchmark::DoNotOptimize(vec);
     }
 }
 
