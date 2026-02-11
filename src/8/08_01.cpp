@@ -1,5 +1,4 @@
-#include <cassert>
-#include <iostream>
+#include <gtest/gtest.h>
 
 class Entity_v1
 {
@@ -30,15 +29,27 @@ union Entity_Union {
     }
 };
 
-int main()
-{
-    Entity_v1 entity(50);
-    assert(entity.get_value() == 50);
+class EntityTest : public ::testing::Test {
+protected:
+    Entity_v1 entity{50};
+};
 
+TEST_F(EntityTest, InitialValueIsCorrect) {
+    EXPECT_EQ(entity.get_value(), 50);
+}
+
+TEST_F(EntityTest, ModifyViaReinterpretCast) {
     reinterpret_cast<Entity_v2&>(entity).m_value_public = 100;
-    assert(entity.get_value() == 100);
+    EXPECT_EQ(entity.get_value(), 100);
+}
 
+TEST_F(EntityTest, ModifyViaUnion) {
     Entity_Union entity_union(&entity);
     entity_union.p_e2->m_value_public = 200;
-    assert(entity.get_value() == 200);
+    EXPECT_EQ(entity.get_value(), 200);
+}
+
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
