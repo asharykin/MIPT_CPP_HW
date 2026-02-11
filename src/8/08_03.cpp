@@ -55,7 +55,8 @@ int log2_custom(float x)
         res = static_cast<int>(exponent) - 127;
 
         // For 0 < x < 1, x not power of 2
-        if (res < 0 && mantissa != 0) {
+        if (res < 0 && mantissa != 0)
+        {
             res += 1;
         }
     } else {
@@ -63,7 +64,8 @@ int log2_custom(float x)
         unsigned int temp = mantissa;
         int msb_position = -1;
 
-        while (temp > 0) {
+        while (temp > 0)
+        {
             temp = temp >> 1;
             msb_position++;
         }
@@ -71,7 +73,8 @@ int log2_custom(float x)
         res = -126 + (msb_position - 23);
 
         // x is not power of 2
-        if (mantissa > (1u << msb_position)) {
+        if (mantissa > (1u << msb_position))
+        {
             res += 1;
         }
     }
@@ -98,7 +101,8 @@ TEST(Log2CustomTest, PositiveIntegers)
     EXPECT_EQ(log2_custom(20), 4);
 }
 
-TEST(Log2CustomTest, FloatingPointValues) {
+TEST(Log2CustomTest, FloatingPointValues)
+{
     EXPECT_EQ(log2_custom(10.75f), 3);
     EXPECT_EQ(log2_custom(2.5f), 1);
     EXPECT_EQ(log2_custom(0.9f), 0);
@@ -106,12 +110,14 @@ TEST(Log2CustomTest, FloatingPointValues) {
     EXPECT_EQ(log2_custom(0.01f), -6);
 }
 
-TEST(Log2CustomTest, ExtremeValues) {
+TEST(Log2CustomTest, ExtremeValues)
+{
     EXPECT_EQ(log2_custom(0.00000000000000000000000000000000000001f), -126);
     EXPECT_EQ(log2_custom(static_cast<float>(std::pow(2, -130))), -130);
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
