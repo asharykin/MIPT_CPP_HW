@@ -20,11 +20,13 @@ public:
     int m_value_public;
 };
 
-union Entity_Union {
+union Entity_Union
+{
     Entity_v1* p_e1;
     Entity_v2* p_e2;
 
-    Entity_Union(Entity_v1* target) {
+    Entity_Union(Entity_v1* target)
+    {
         p_e1 = target;
     }
 };

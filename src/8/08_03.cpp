@@ -1,4 +1,4 @@
-#include <cassert>
+#include <gtest/gtest.h>
 #include <complex>
 #include <stdexcept>
 
@@ -79,38 +79,39 @@ int log2_custom(float x)
     return res;
 }
 
-int main()
+TEST(Log2CustomTest, ThrowsOnInvalidArguments)
 {
-    try {
-        log2_custom(-2);
-    } catch (const std::invalid_argument& e) {
-        assert(std::string(e.what()) == "Input must be a positive integer.");
-    }
-
-    assert(log2_custom(1) == 0);
-    assert(log2_custom(2) == 1);
-    assert(log2_custom(10) == 3);
-    assert(log2_custom(20) == 4);
+    EXPECT_THROW(log2_custom(-2), std::invalid_argument);
 
     float inf = 1.0f / 0.0f;
-    try {
-        log2_custom(inf);
-    } catch (const std::invalid_argument& e) {
-        assert(std::string(e.what()) == "Input cannot be Infinity or NaN.");
-    }
+    EXPECT_THROW(log2_custom(inf), std::invalid_argument);
 
     float nan = 0.0f / 0.0f;
-    try {
-        log2_custom(nan);
-    } catch (const std::invalid_argument& e) {
-        assert(std::string(e.what()) == "Input cannot be Infinity or NaN.");
-    }
+    EXPECT_THROW(log2_custom(nan), std::invalid_argument);
+}
 
-    assert(log2_custom(10.75f) == 3);
-    assert(log2_custom(2.5f) == 1);
-    assert(log2_custom(0.9f) == 0);
-    assert(log2_custom(0.25f) == -2);
-    assert(log2_custom(0.01f) == -6);
-    assert(log2_custom(0.00000000000000000000000000000000000001f) == -126);
-    assert(log2_custom(static_cast<float>(std::pow(2, -130))) == -130);
+TEST(Log2CustomTest, PositiveIntegers)
+{
+    EXPECT_EQ(log2_custom(1), 0);
+    EXPECT_EQ(log2_custom(2), 1);
+    EXPECT_EQ(log2_custom(10), 3);
+    EXPECT_EQ(log2_custom(20), 4);
+}
+
+TEST(Log2CustomTest, FloatingPointValues) {
+    EXPECT_EQ(log2_custom(10.75f), 3);
+    EXPECT_EQ(log2_custom(2.5f), 1);
+    EXPECT_EQ(log2_custom(0.9f), 0);
+    EXPECT_EQ(log2_custom(0.25f), -2);
+    EXPECT_EQ(log2_custom(0.01f), -6);
+}
+
+TEST(Log2CustomTest, ExtremeValues) {
+    EXPECT_EQ(log2_custom(0.00000000000000000000000000000000000001f), -126);
+    EXPECT_EQ(log2_custom(static_cast<float>(std::pow(2, -130))), -130);
+}
+
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
