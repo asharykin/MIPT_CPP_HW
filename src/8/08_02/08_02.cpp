@@ -12,7 +12,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cassert>
+#include <gtest/gtest.h>
 #include <sstream>
 #include <string>
 
@@ -24,111 +24,83 @@ using namespace std::literals;
 
 #include "integer.hpp"
 
-////////////////////////////////////////////////////////////////////////////////////////////
+class IntegerTest : public ::testing::Test {
+protected:
+    void SetUp() override {
+        x = std::string(32, '1');
+        y = std::string(32, '2');
+        zero = "0"s;
+    }
 
-int main()
-{
-	Integer x = std::string(32, '1');
+    Integer x;
+    Integer y;
+    Integer zero;
+};
 
-	Integer y = std::string(32, '2');
+TEST_F(IntegerTest, CompoundAssignmentOperators) {
+    EXPECT_EQ((x += y), "+33333333333333333333333333333333"s);
+    EXPECT_EQ((x -= y), "+11111111111111111111111111111111"s);
+    EXPECT_EQ((x *= y), "+246913580246913580246913580246908641975308641975308641975308642"s);
+    EXPECT_EQ((x /= y), "+11111111111111111111111111111111"s);
+}
 
-//  ----------------------------------------------------------------------------------------
+TEST_F(IntegerTest, IncrementDecrementOperators) {
+    EXPECT_EQ((x++), "+11111111111111111111111111111111"s);
+    EXPECT_EQ((x--), "+11111111111111111111111111111112"s);
+    EXPECT_EQ((++y), "+22222222222222222222222222222223"s);
+    EXPECT_EQ((--y), "+22222222222222222222222222222222"s);
+}
 
-	assert((x += y) == "+33333333333333333333333333333333"s);
+TEST_F(IntegerTest, ArithmeticOperators) {
+    EXPECT_EQ((x + y), "+33333333333333333333333333333333"s);
+    EXPECT_EQ((x - y), "-11111111111111111111111111111111"s);
+    EXPECT_EQ((x * y), "+246913580246913580246913580246908641975308641975308641975308642"s);
+    EXPECT_EQ((x / y), zero);
+}
 
-	assert((x -= y) == "+11111111111111111111111111111111"s);
+TEST_F(IntegerTest, ComparisonOperators) {
+    EXPECT_TRUE(x < y);
+    EXPECT_FALSE(x > y);
+    EXPECT_TRUE(x <= y);
+    EXPECT_FALSE(x >= y);
+    EXPECT_FALSE(x == y);
+    EXPECT_TRUE(x != y);
+}
 
-	assert((x *= y) == "+246913580246913580246913580246908641975308641975308641975308642"s);
+TEST_F(IntegerTest, StreamOperators) {;
+    std::stringstream stream_1( std::string(32, '1'));
+    std::stringstream stream_2;
 
-	assert((x /= y) == "+11111111111111111111111111111111"s);
+    stream_1 >> x;
+    stream_2 << x;
 
-//  ----------------------------------------------------------------------------------------
+    EXPECT_EQ(stream_2.str(), stream_1.str());
+}
 
-	assert((x ++  ) == "+11111111111111111111111111111111"s);
+TEST_F(IntegerTest, MathematicalFunctions) {
+    EXPECT_EQ(sqrt(multiply(x, x)), x);
 
-	assert((x --  ) == "+11111111111111111111111111111112"s);
+    EXPECT_EQ((x - y).abs(), x);
+    EXPECT_EQ(x.abs(), x);
+    EXPECT_EQ(zero.abs(), zero);
 
-	assert((  ++ y) == "+22222222222222222222222222222223"s);
+    EXPECT_EQ((x - y).sign(), -1);
+    EXPECT_EQ(x.sign(), 1);
+    EXPECT_EQ(zero.sign(), 0);
 
-	assert((  -- y) == "+22222222222222222222222222222222"s);
+    EXPECT_EQ((y % x), zero);
+    EXPECT_EQ((y %= "+1000"s), "+222"s);
+    EXPECT_EQ((y % "+100"s), "+22"s);
 
-//  ----------------------------------------------------------------------------------------
+    Integer base_2 = "+2"s;
+    EXPECT_EQ(base_2.pow(10), "+1024"s);
+    EXPECT_EQ(base_2.pow(0), "+1"s);
 
-	assert((x +  y) == "+33333333333333333333333333333333"s);
+    Integer base_10 = "+10"s;
+    EXPECT_EQ(base_10.pow(20), "+100000000000000000000"s);
+}
 
-	assert((x -  y) == "-11111111111111111111111111111111"s);
-
-	assert((x *  y) == "+246913580246913580246913580246908641975308641975308641975308642"s);
-
-	assert((x /  y) == "+0"s);
-
-//  ----------------------------------------------------------------------------------------
-
-	assert((x <  y) == 1);
-
-	assert((x >  y) == 0);
-
-	assert((x <= y) == 1);
-
-	assert((x >= y) == 0);
-
-	assert((x == y) == 0);
-
-	assert((x != y) == 1);
-
-//  ----------------------------------------------------------------------------------------
-
-	std::stringstream stream_1(std::string(32, '1'));
-
-	std::stringstream stream_2;
-
-//  ----------------------------------------------------------------------------------------
-
-	stream_1 >> x;
-
-	stream_2 << x;
-
-//  ----------------------------------------------------------------------------------------
-
-	assert(stream_2.str() == stream_1.str());
-
-//  ----------------------------------------------------------------------------------------
-
-	assert(sqrt(multiply(x, x)) == x);
-
-	Integer neg_x = "-12345"s;
-
-	Integer pos_x = "12345"s;
-
-	Integer zero = "0"s;
-
-	assert(neg_x.abs() == "+12345"s);
-	assert(pos_x.abs() == "+12345"s);
-
-	assert(neg_x.sign() == -1);
-	assert(pos_x.sign() == 1);
-	assert(zero.sign() == 0);
-
-	Integer a = "123456789"s;
-
-	Integer b = "100"s;
-
-	assert((a % b) == "+89"s);
-
-	Integer c = "1000"s;
-
-	Integer d = "3"s;
-
-	c %= d;
-
-	assert(c == "+1"s);
-
-	Integer base = "2"s;
-
-	assert(base.pow(10) == "+1024"s);
-	assert(base.pow(0) == "+1"s);
-
-	Integer large_base = "10"s;
-
-	assert(large_base.pow(20) == "+100000000000000000000"s);
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
