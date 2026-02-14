@@ -6,7 +6,10 @@
 class Evolution
 {
 public:
-    Evolution() : engine(rd()), char_dist(0, alphabet.length() - 1), rate_dist(0.0, 1.0) { }
+    Evolution() : engine(rd()), rate_dist(0.0, 1.0) {
+        alphabet.resize(26);
+        std::iota(std::begin(alphabet), std::end(alphabet), 'a');
+    }
 
     void run()
     {
@@ -50,21 +53,21 @@ public:
 
 private:
     const std::string target = "methinksitislikeaweasel";
-    const std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
     const int copies_size = 100;
     const double mutation_rate = 0.05;
 
+    std::string alphabet;
     std::random_device rd;
     std::default_random_engine engine;
-    std::uniform_int_distribution<int> char_dist;
     std::uniform_real_distribution<double> rate_dist;
 
     std::string generate_initial_string()
     {
         std::string result;
-        for (size_t i = 0; i < target.length(); ++i)
+        result.resize(target.length());
+        for (auto& c : result)
         {
-            result += alphabet[char_dist(engine)];
+            c = alphabet[engine() % alphabet.length()];
         }
         return result;
     }
@@ -89,7 +92,7 @@ private:
         {
             if (rate_dist(engine) <= mutation_rate)
             {
-                c = alphabet[char_dist(engine)];
+                c = alphabet[engine() % alphabet.length()];
             }
         }
         return copy;
