@@ -24,9 +24,12 @@ using namespace std::literals;
 
 #include "integer.hpp"
 
-class IntegerTest : public ::testing::Test {
+class IntegerTest : public ::testing::Test
+{
 protected:
-    void SetUp() override {
+
+    void SetUp() override
+    {
         x = std::string(32, '1');
         y = std::string(32, '2');
         zero = "0"s;
@@ -37,28 +40,32 @@ protected:
     Integer zero;
 };
 
-TEST_F(IntegerTest, CompoundAssignmentOperators) {
+TEST_F(IntegerTest, CompoundAssignmentOperators)
+{
     EXPECT_EQ((x += y), "+33333333333333333333333333333333"s);
     EXPECT_EQ((x -= y), "+11111111111111111111111111111111"s);
     EXPECT_EQ((x *= y), "+246913580246913580246913580246908641975308641975308641975308642"s);
     EXPECT_EQ((x /= y), "+11111111111111111111111111111111"s);
 }
 
-TEST_F(IntegerTest, IncrementDecrementOperators) {
+TEST_F(IntegerTest, IncrementDecrementOperators)
+{
     EXPECT_EQ((x++), "+11111111111111111111111111111111"s);
     EXPECT_EQ((x--), "+11111111111111111111111111111112"s);
     EXPECT_EQ((++y), "+22222222222222222222222222222223"s);
     EXPECT_EQ((--y), "+22222222222222222222222222222222"s);
 }
 
-TEST_F(IntegerTest, ArithmeticOperators) {
+TEST_F(IntegerTest, ArithmeticOperators)
+{
     EXPECT_EQ((x + y), "+33333333333333333333333333333333"s);
     EXPECT_EQ((x - y), "-11111111111111111111111111111111"s);
     EXPECT_EQ((x * y), "+246913580246913580246913580246908641975308641975308641975308642"s);
     EXPECT_EQ((x / y), zero);
 }
 
-TEST_F(IntegerTest, ComparisonOperators) {
+TEST_F(IntegerTest, ComparisonOperators)
+{
     EXPECT_TRUE(x < y);
     EXPECT_FALSE(x > y);
     EXPECT_TRUE(x <= y);
@@ -67,7 +74,8 @@ TEST_F(IntegerTest, ComparisonOperators) {
     EXPECT_TRUE(x != y);
 }
 
-TEST_F(IntegerTest, StreamOperators) {;
+TEST_F(IntegerTest, StreamOperators)
+{
     std::stringstream stream_1( std::string(32, '1'));
     std::stringstream stream_2;
 
@@ -77,7 +85,8 @@ TEST_F(IntegerTest, StreamOperators) {;
     EXPECT_EQ(stream_2.str(), stream_1.str());
 }
 
-TEST_F(IntegerTest, MathematicalFunctions) {
+TEST_F(IntegerTest, MathematicalFunctions)
+{
     EXPECT_EQ(sqrt(multiply(x, x)), x);
 
     EXPECT_EQ((x - y).abs(), x);
@@ -100,7 +109,8 @@ TEST_F(IntegerTest, MathematicalFunctions) {
     EXPECT_EQ(base_10.pow(20), "+100000000000000000000"s);
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
