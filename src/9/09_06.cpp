@@ -45,6 +45,7 @@ private:
 class FibonacciTest : public ::testing::Test
 {
 protected:
+
     Iterator it;
 };
 
