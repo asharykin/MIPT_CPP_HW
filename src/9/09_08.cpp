@@ -10,14 +10,14 @@ public :
 
     static auto operator new(std::size_t size) -> void *
     {
-        std::cout << std::format("Entity::operator new\n");
+        std::cout << "Entity::operator new\n";
 
         return ::operator new(size);
     }
 
     static void operator delete(void * x) noexcept
     {
-        std::cout << std::format("Entity::operator delete\n");
+        std::cout << "Entity::operator delete\n";
 
         ::operator delete(x);
     }
@@ -26,14 +26,14 @@ public :
 
     static auto operator new[](std::size_t size) -> void *
     {
-        std::cout << std::format("Entity::operator new[]\n");
+        std::cout << "Entity::operator new[]\n";
 
         return ::operator new[](size);
     }
 
     static void operator delete[](void * x) noexcept
     {
-        std::cout << std::format("Entity::operator delete[]\n");
+        std::cout << "Entity::operator delete[]\n";
 
         ::operator delete[](x);
     }
@@ -42,14 +42,14 @@ public :
 
     static auto operator new(std::size_t size, const std::nothrow_t & nt) noexcept -> void *
     {
-        std::cout << std::format("Entity::operator new (nothrow)\n");
+        std::cout << "Entity::operator new (nothrow)\n";
 
         return ::operator new(size, nt);
     }
 
     static void operator delete(void * x, const std::nothrow_t &) noexcept
     {
-        std::cout << std::format("Entity::operator delete (nothrow)\n");
+        std::cout << "Entity::operator delete (nothrow)\n";
 
         ::operator delete(x);
     }
@@ -58,14 +58,14 @@ public :
 
     static auto operator new[](std::size_t size, const std::nothrow_t & nt) noexcept -> void *
     {
-        std::cout << std::format("Entity::operator new[] (nothrow)\n");
+        std::cout << "Entity::operator new[] (nothrow)\n";
 
         return ::operator new[](size, nt);
     }
 
     static void operator delete[](void * x, const std::nothrow_t &) noexcept
     {
-        std::cout << std::format("Entity::operator delete[] (nothrow)\n");
+        std::cout << "Entity::operator delete[] (nothrow)\n";
 
         ::operator delete[](x);
     }
@@ -108,13 +108,23 @@ int main()
 {
     delete new Client;
 
+    std::cout << std::endl;
+
     delete[] new Client[2];
 
+    std::cout << std::endl;
+
     Client* p1 = new (std::nothrow) Client;
-    operator delete(p1, std::nothrow);
+    p1->~Client();
+    operator delete(p1, std::nothrow); // delete p1; would also call destructors
+
+    std::cout << std::endl;
 
     Client* p2 = new (std::nothrow) Client[3];
-    operator delete[](p2, std::nothrow);
+    p2->~Client();
+    (p2 + 1)->~Client();
+    (p2 + 2)->~Client();
+    operator delete[](p2, std::nothrow); // delete[] p2; would also call destructors
 }
 
 ///////////////////////////////////////////////////////////////////
