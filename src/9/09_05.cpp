@@ -81,25 +81,24 @@ public:
 
     void push_back(T x)
     {
-        auto node = std::make_shared<Node>(x, nullptr);
+        auto node = std::make_shared<Node>(x);
         if (m_head)
         {
-            auto tail = m_head;
-            while (tail->next)
-            {
-                tail = tail->next;
-            }
-            tail->next = node;
-            node->prev = tail;
-        } else
+            node->prev = m_tail;
+            m_tail->next = node;
+            m_tail = node;
+        }
+        else
         {
             m_head = node;
+            m_tail = node;
         }
     }
 
 private:
 
     std::shared_ptr<Node> m_head;
+    std::shared_ptr<Node> m_tail;
 };
 
 TEST(ListTest, EmptyList)
