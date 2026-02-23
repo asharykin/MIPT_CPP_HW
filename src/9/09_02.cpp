@@ -26,69 +26,67 @@ public:
 
     Tree() = default;
 
-    ~Tree() {
+    ~Tree()
+    {
         std::cout << "Tree::~Tree()" << std::endl;
     }
 
-    void traverse_v1() const
-    {
-        if (!root) return;
+    void traverse_v1() const { traverse_impl<BFS_Policy>(); }
 
-        std::cout << "BFS Traversal: ";
-        std::queue<std::shared_ptr<Node>> q;
-        q.push(root);
-
-        while (!q.empty())
-        {
-            std::shared_ptr<Node> current = q.front();
-            q.pop();
-
-            std::cout << current->value << " ";
-
-            if (current->left)
-            {
-                q.push(current->left);
-            }
-            if (current->right)
-            {
-                q.push(current->right);
-            }
-        }
-        std::cout << std::endl;
-    }
-
-    void traverse_v2() const
-    {
-        if (!root) return;
-
-        std::cout << "DFS Traversal: ";
-        std::stack<std::shared_ptr<Node>> s;
-        s.push(root);
-
-        while (!s.empty())
-        {
-            std::shared_ptr<Node> current = s.top();
-            s.pop();
-
-            std::cout << current->value << " ";
-
-            if (current->right)
-            {
-                s.push(current->right);
-            }
-            if (current->left)
-            {
-                s.push(current->left);
-            }
-        }
-        std::cout << std::endl;
-    }
+    void traverse_v2() const { traverse_impl<DFS_Policy>(); }
 
     static std::shared_ptr<Node> create_node(int val, std::shared_ptr<Node> parent)
     {
         std::shared_ptr<Node> node = std::make_shared<Node>(val);
         node->parent = parent;
         return node;
+    }
+
+private:
+
+    struct BFS_Policy
+    {
+        using Container = std::queue<std::shared_ptr<Node>>;
+
+        static std::shared_ptr<Node>& get_next(Container& c) { return c.front(); }
+
+        static void add_children(Container& c, const std::shared_ptr<Node>& n)
+        {
+            if (n->left) c.push(n->left);
+            if (n->right) c.push(n->right);
+        }
+    };
+
+    struct DFS_Policy
+    {
+        using Container = std::stack<std::shared_ptr<Node>>;
+
+        static std::shared_ptr<Node>& get_next(Container& c) { return c.top(); }
+
+        static void add_children(Container& c, const std::shared_ptr<Node>& n)
+        {
+            if (n->right) c.push(n->right);
+            if (n->left) c.push(n->left);
+        }
+    };
+
+    template <typename Policy, typename C = typename Policy::Container>
+    void traverse_impl() const
+    {
+        if (!root) return;
+
+        C container;
+        container.push(root);
+
+        while (!container.empty())
+        {
+            std::shared_ptr<Node> current = Policy::get_next(container);
+            container.pop();
+            std::cout << current->value << " ";
+            Policy::add_children(container, current);
+        }
+
+        std::cout << std::endl;
     }
 };
 
@@ -108,7 +106,10 @@ int main()
         tree.root->right->left = Tree::create_node(6, tree.root->right);
         tree.root->right->right = Tree::create_node(7, tree.root->right);
 
+        std::cout << "BSF Traversal: ";
         tree.traverse_v1();
+
+        std::cout << "DSF Traversal: ";
         tree.traverse_v2();
     }
     // At this point, tree is destroyed.

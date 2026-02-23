@@ -11,7 +11,7 @@ class Timer
 {
 public:
 
-    Timer(std::string const& scope) : m_scope(scope), m_running(false) { }
+    Timer(std::string scope) : m_scope(std::move(scope)), m_running(false) { }
 
     ~Timer()
     {
