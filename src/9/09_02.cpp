@@ -48,7 +48,7 @@ private:
     {
         using Container = std::queue<std::shared_ptr<Node>>;
 
-        static auto& get_next(Container& c) { return c.front(); }
+        static std::shared_ptr<Node>& get_next(Container& c) { return c.front(); }
 
         static void add_children(Container& c, const std::shared_ptr<Node>& n)
         {
@@ -61,7 +61,7 @@ private:
     {
         using Container = std::stack<std::shared_ptr<Node>>;
 
-        static auto& get_next(Container& c) { return c.top(); }
+        static std::shared_ptr<Node>& get_next(Container& c) { return c.top(); }
 
         static void add_children(Container& c, const std::shared_ptr<Node>& n)
         {
