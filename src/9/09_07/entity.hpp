@@ -1,9 +1,9 @@
 #pragma once
-//#include <boost/noncopyable.hpp>
+#include <boost/noncopyable.hpp>
 #include <array>
 #include <cstddef>
 
-class Entity //: private boost::noncopyable
+class Entity : private boost::noncopyable
 {
 public:
     Entity();

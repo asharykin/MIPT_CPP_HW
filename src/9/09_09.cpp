@@ -7,10 +7,10 @@
 #include <utility>
 #include <vector>
 #include <limits>
-//#include <boost/noncopyable.hpp>
+#include <boost/noncopyable.hpp>
 #include <benchmark/benchmark.h>
 
-class Allocator //: private boost::noncopyable
+class Allocator : private boost::noncopyable
 {
 public:
 
