@@ -82,6 +82,7 @@ public:
     void push_back(T x)
     {
         std::shared_ptr<Node> node = std::make_shared<Node>(x);
+
         if (m_head)
         {
             node->prev = m_tail;
