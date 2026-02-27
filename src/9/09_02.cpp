@@ -73,8 +73,11 @@ private:
     template <typename Policy, typename C = typename Policy::Container>
     void traverse_impl() const
     {
-        if (!root) return;
-
+        if (!root)
+        {
+            return;
+        }
+        
         C container;
         container.push(root);
 
