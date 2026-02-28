@@ -31,9 +31,15 @@ public:
         std::cout << "Tree::~Tree()" << std::endl;
     }
 
-    void traverse_v1() const { traverse_impl<BFS_Policy>(); }
+    void traverse_v1() const
+    { 
+        traverse_impl<BFS_Policy>(); 
+    }
 
-    void traverse_v2() const { traverse_impl<DFS_Policy>(); }
+    void traverse_v2() const 
+    { 
+        traverse_impl<DFS_Policy>(); 
+    }
 
     static std::shared_ptr<Node> create_node(int val, std::shared_ptr<Node> parent)
     {
