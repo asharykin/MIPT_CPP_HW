@@ -7,8 +7,11 @@
 template <typename RandomIt>
 void order(RandomIt first, RandomIt last)
 {
-    if (first == last) return;
-
+    if (first == last)
+    {
+        return;
+    }
+    
     for (auto i = std::next(first); i != last; ++i)
     {
         for (auto j = i; j != first && *std::prev(j) > *j; --j)
