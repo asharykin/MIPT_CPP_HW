@@ -20,7 +20,8 @@ public:
 
     void start()
     {
-        if (!m_running) {
+        if (!m_running)
+        {
             m_begin = clock_t::now();
             m_running = true;
         }
@@ -28,7 +29,8 @@ public:
 
     void stop()
     {
-        if (m_running) {
+        if (m_running)
+        {
             m_measurements.push_back(std::chrono::duration_cast<D>(clock_t::now() - m_begin));
             m_running = false;
         }
