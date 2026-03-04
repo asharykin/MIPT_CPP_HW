@@ -3,6 +3,7 @@
 class Entity_v1
 {
 public:
+
     Entity_v1(int value) : m_value_private(value) { }
 
     int get_value() const
@@ -11,12 +12,14 @@ public:
     }
 
 private:
+
     int m_value_private;
 };
 
 class Entity_v2
 {
 public:
+
     int m_value_public;
 };
 
@@ -34,6 +37,7 @@ union Entity_Union
 class EntityTest : public ::testing::Test
 {
 protected:
+
     Entity_v1 entity{50};
 };
 
