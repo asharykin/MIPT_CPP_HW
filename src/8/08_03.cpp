@@ -50,7 +50,8 @@ int log2_custom(float x)
 
     int res;
 
-    if (exponent > 0) {
+    if (exponent > 0) 
+    {
         // Normalized numbers
         res = static_cast<int>(exponent) - 127;
 
@@ -59,7 +60,8 @@ int log2_custom(float x)
         {
             res += 1;
         }
-    } else {
+    } else 
+    {
         // Denormalized numbers (very-very-very small)
         unsigned int temp = mantissa;
         int msb_position = -1;
