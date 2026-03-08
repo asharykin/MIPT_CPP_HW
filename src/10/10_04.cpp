@@ -14,7 +14,8 @@ using boost::numeric::ublas::prod;
 
 bounded_matrix<uint64_t, 2, 2> matrix_pow(bounded_matrix<uint64_t, 2, 2> A, unsigned char n)
 {
-    bounded_matrix<uint64_t, 2, 2> R = identity_matrix<uint64_t>(2); // [ [1, 0], [0, 1] ]
+    // [ [1, 0], [0, 1] ]
+    bounded_matrix<uint64_t, 2, 2> R = identity_matrix<uint64_t>(2);
 
     while (n > 0) {
         if (n & 1) { // like (n % 2 == 1) but faster
@@ -104,3 +105,21 @@ int main(int argc, char **argv)
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
+
+/**
+ * Time Complexity: O(log n)
+ * This algorithm implements the "Exponentiation by Squaring" technique.
+ * In each iteration of the while loop, the exponent n is divided by 2 (n >>= 1).
+ * This results in exactly floor(log2(n)) matrix multiplications.
+ * Since we use fixed-size 2x2 matrices, each prod(A, B) call produces
+ * a constant number of operations (8 multiplications, 4 additions).
+ * Thus, the total complexity is O(C * log n), which simplifies to O(log n).
+ */
+
+/**
+ * Other algorithms:
+ * Naive Recursive - O(2^n)
+ * Iterative (Simple Loop) - O(n)
+ * Dynamic Programming - O(n)
+ * Binet's Formula - O(1)
+ */
