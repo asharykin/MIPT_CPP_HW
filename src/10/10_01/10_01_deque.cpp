@@ -6,8 +6,7 @@
 // GCC libstdc++ deque uses 512-byte pages
 // Elements per page = max(512 / sizeof(T), 1)
 
-template<typename T>
-class DequeMemoryTest : public ::testing::Test
+template<typename T> class DequeMemoryTest : public ::testing::Test
 {
 protected:
 
