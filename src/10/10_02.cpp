@@ -110,46 +110,46 @@ TYPED_TEST_SUITE(MinStackTest, MyTypes);
 
 TYPED_TEST(MinStackTest, SequentialOperations)
 {
-    this->stack.push(3);
+    this->stack.push(0);
     this->stack.push(5);
-    EXPECT_EQ(this->stack.min(), 3);
+    EXPECT_EQ(this->stack.min(), 0);
     EXPECT_EQ(this->stack.top(), 5);
 
-    this->stack.push(1);
-    EXPECT_EQ(this->stack.min(), 1);
-    EXPECT_EQ(this->stack.top(), 1);
+    this->stack.push(-3);
+    EXPECT_EQ(this->stack.min(), -3);
+    EXPECT_EQ(this->stack.top(), -3);
 
     this->stack.pop();
-    EXPECT_EQ(this->stack.min(), 3);
+    EXPECT_EQ(this->stack.min(), 0);
     EXPECT_EQ(this->stack.top(), 5);
 }
 
 TYPED_TEST(MinStackTest, DuplicateMinimum)
 {
-    this->stack.push(2);
-    this->stack.push(2);
+    this->stack.push(-2);
+    this->stack.push(-2);
     this->stack.push(5);
-    EXPECT_EQ(this->stack.min(), 2);
+    EXPECT_EQ(this->stack.min(), -2);
 
     this->stack.pop();
-    EXPECT_EQ(this->stack.min(), 2);
+    EXPECT_EQ(this->stack.min(), -2);
 
     this->stack.pop();
-    EXPECT_EQ(this->stack.min(), 2);
+    EXPECT_EQ(this->stack.min(), -2);
 }
 
 TYPED_TEST(MinStackTest, AscendingSequence)
 {
-    this->stack.push(10);
-    this->stack.push(20);
+    this->stack.push(-10);
+    this->stack.push(0);
     this->stack.push(30);
-    EXPECT_EQ(this->stack.min(), 10);
+    EXPECT_EQ(this->stack.min(), -10);
 
     this->stack.pop();
-    EXPECT_EQ(this->stack.min(), 10);
+    EXPECT_EQ(this->stack.min(), -10);
 
     this->stack.pop();
-    EXPECT_EQ(this->stack.min(), 10);
+    EXPECT_EQ(this->stack.min(), -10);
 }
 
 int main(int argc, char **argv)
