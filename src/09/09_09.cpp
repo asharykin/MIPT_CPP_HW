@@ -232,8 +232,7 @@ private:
 };
 
 
-template <Allocator::Policy P>
-void BM_Allocator_Test(benchmark::State & state)
+template <Allocator::Policy P> void BM_Allocator_Test(benchmark::State & state)
 {
     auto kb = 1'024uz, mb = kb * kb, gb = kb * kb * kb;
 
