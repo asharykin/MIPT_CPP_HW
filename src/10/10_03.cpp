@@ -1,18 +1,15 @@
 #include <iostream>
-#include <vector>
 #include <chrono>
 #include <thread>
 
-class Life
-{
+class Life {
 public:
 
-    Life() : rows(10), columns(10), grid(10, std::vector<unsigned char>(10, 0)) { }
+    Life() : grid(0) { }
 
-    void run(int const generations, std::chrono::milliseconds const ms = std::chrono::milliseconds(300))
+    void run(int const generations, std::chrono::milliseconds const ms = std::chrono::milliseconds(200))
     {
         initialize();
-
         for (int i = 0; i <= generations; ++i)
         {
             display(i);
@@ -23,97 +20,92 @@ public:
 
 private:
 
-    void next_generation()
+    void initialize()
     {
-        std::vector newgrid(rows, std::vector<unsigned char>(columns, 0));
+        set_cell(1, 2);
+        set_cell(2, 3);
+        set_cell(3, 1);
+        set_cell(3, 2);
+        set_cell(3, 3);
+    }
 
-        for (size_t r = 0; r < rows; ++r)
-        {
-            for (size_t c = 0; c < columns; ++c)
-            {
-                int count = count_neighbors(r, c);
-
-                if (grid[r][c] == alive)
-                {
-                    newgrid[r][c] = (count == 2 || count == 3) ? alive : dead;
-                } else
-                {
-                    newgrid[r][c] = (count == 3) ? alive : dead;
-                }
-            }
-        }
-
-        grid.swap(newgrid);
+    void set_cell(int r, int c)
+    {
+        grid |= (1ULL << (r * 8 + c));
     }
 
     void display(int gen) const
     {
         std::cout << "Generation: " << gen << std::endl;
-
-        for (const auto& row : grid)
+        for (int r = 0; r < 8; ++r)
         {
-            for (auto cell : row)
+            for (int c = 0; c < 8; ++c)
             {
-                std::cout << (cell == alive ? "* " : ". ");
+                bool is_alive = (grid & (1ULL << (r * 8 + c)));
+                std::cout << (is_alive ? "* " : ". ");
             }
-            std::cout << std::endl;
+            std::cout << "\n";
         }
-
         std::cout << std::endl;
     }
 
-    void initialize()
+    void next_generation()
     {
-        // initializing with the famous "glider" figure
-        grid[1][2] = alive;
-        grid[2][3] = alive;
-        grid[3][1] = alive;
-        grid[3][2] = alive;
-        grid[3][3] = alive;
+        // Masks to prevent bits from "wrapping around" to the opposite side of the grid in the next row
+        const uint64_t NOT_LEFT_COL  = 0xFEFEFEFEFEFEFEFEULL;
+        const uint64_t NOT_RIGHT_COL = 0x7F7F7F7F7F7F7F7FULL;
+
+        // Shift the entire grid to align each cell with its 8 possible neighbors
+        uint64_t L  = (grid & NOT_LEFT_COL)  >> 1; // Neighbor to the Left (West)
+        uint64_t R  = (grid & NOT_RIGHT_COL) << 1; // Neighbor to the Right (East)
+        uint64_t U  = grid >> 8; // Neighbor Up (North)
+        uint64_t D  = grid << 8; // Neighbor Down (South)
+        uint64_t UL = (grid & NOT_LEFT_COL)  >> 9; // Neighbor Up-Left (North-West)
+        uint64_t UR = (grid & NOT_RIGHT_COL) >> 7; // Neighbor Up-Right (North-East)
+        uint64_t DL = (grid & NOT_LEFT_COL)  << 7; // Neighbor Down-Left (South-West)
+        uint64_t DR = (grid & NOT_RIGHT_COL) << 9; // Neighbor Down-Right (South-East)
+
+        // 3-bit vertical counter (b2, b1, b0) to store neighbor counts (0-8) for each cell
+        uint64_t b0 = 0, b1 = 0, b2 = 0;
+
+        add_to_counter(b0, b1, b2, L);
+        add_to_counter(b0, b1, b2, R);
+        add_to_counter(b0, b1, b2, U);
+        add_to_counter(b0, b1, b2, D);
+        add_to_counter(b0, b1, b2, UL);
+        add_to_counter(b0, b1, b2, UR);
+        add_to_counter(b0, b1, b2, DL);
+        add_to_counter(b0, b1, b2, DR);
+
+        // Identify cells with exactly 3 neighbors (binary 011)
+        uint64_t three_neighbors = b1 & b0 & ~b2;
+        // Identify cells with exactly 2 neighbors (binary 010)
+        uint64_t two_neighbors   = b1 & ~b0 & ~b2;
+
+        // Birth if has 3 neighbors
+        // Survival if has 2 neighbors AND currently alive
+        grid = three_neighbors | (grid & two_neighbors);
     }
 
-    int count_neighbors(int r, int c) const
+    void add_to_counter(uint64_t& b0, uint64_t& b1, uint64_t& b2, uint64_t val)
     {
-        int count = 0;
-        
-        // 8 neighbors around the cell (r, c)
-        for (int i = -1; i <= 1; ++i)
-        {
-            for (int j = -1; j <= 1; ++j)
-            {
-                if (i == 0 && j == 0)
-                {
-                    continue; // skip the cell itself
-                }
-
-                int row = r + i;
-                int col = c + j;
-
-                // check the grid bounds
-                if (row >= 0 && row < (int) rows && col >= 0 && col < (int) columns)
-                {
-                    if (grid[row][col] == alive) count++;
-                }
-            }
-        }
-        return count;
+        // Bitwise half-adder logic to increment the 3-bit parallel counter
+        uint64_t carry0 = b0 & val;
+        b0 ^= val;
+        uint64_t carry1 = b1 & carry0;
+        b1 ^= carry0;
+        b2 |= carry1;
     }
 
 private:
 
-    size_t const rows;
-    size_t const columns;
-
-    std::vector<std::vector<unsigned char>> grid;
-    const unsigned char alive = 1;
-    const unsigned char dead = 0;
+    uint64_t grid;
 };
 
-// my implementation is based on the one from The Modern C++ Challenge (p. 128-132)
 int main()
 {
     using namespace std::chrono_literals;
 
     Life game;
-    game.run(30, 200ms);
+    game.run(20, 200ms);
 }
