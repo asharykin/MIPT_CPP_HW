@@ -6,6 +6,7 @@
 class Evolution
 {
 public:
+
     Evolution() : engine(rd()), rate_dist(0.0, 1.0) {
         alphabet.resize(26);
         std::iota(std::begin(alphabet), std::end(alphabet), 'a');
@@ -52,6 +53,7 @@ public:
     }
 
 private:
+
     const std::string target = "methinksitislikeaweasel";
     const int copies_size = 100;
     const double mutation_rate = 0.05;
