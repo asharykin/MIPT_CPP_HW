@@ -7,7 +7,8 @@ class Evolution
 {
 public:
 
-    Evolution() : engine(rd()), rate_dist(0.0, 1.0) {
+    Evolution() : engine(rd()), rate_dist(0.0, 1.0) 
+    {
         alphabet.resize(26);
         std::iota(std::begin(alphabet), std::end(alphabet), 'a');
     }
