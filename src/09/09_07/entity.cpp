@@ -7,6 +7,7 @@
 class Entity::Implementation
 {
 public:
+
     void test() const
     {
         std::cout << "Entity::Implementation::test const\n";
