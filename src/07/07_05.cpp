@@ -35,7 +35,7 @@ template <typename T> std::size_t partition(std::vector<T>& vector, std::size_t 
     return i;
 }
 
-template <typename T>void quick_split(std::vector<T>& vector, std::size_t left, std::size_t right, std::size_t threshold)
+template <typename T> void quick_split(std::vector<T>& vector, std::size_t left, std::size_t right, std::size_t threshold)
 {
     if (right - left <= threshold)
     {
