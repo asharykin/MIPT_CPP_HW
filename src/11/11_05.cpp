@@ -1,164 +1,276 @@
-#include <gtest/gtest.h>
+#include <iostream>
 #include <vector>
 #include <algorithm>
 #include <ranges>
-#include <numeric>
-#include <cmath>
+#include <iterator>
 #include <random>
-#include <limits>
+#include <gtest/gtest.h>
 
-// 1) Fibonacci View implemented via view_interface
+
+TEST(RangesAlgorithmsTest, ReplaceTest) {
+    std::vector<int> v = {1, 2, 3, 2, 4};
+    std::ranges::replace(v, 2, 99);
+
+    std::vector<int> expected = {1, 99, 3, 99, 4};
+    EXPECT_EQ(v, expected);
+}
+
+TEST(RangesAlgorithmsTest, FillTest) {
+    std::vector<int> v(5);
+    std::ranges::fill(v, 10);
+
+    for (int n : v) {
+        EXPECT_EQ(n, 10);
+    }
+}
+
+TEST(RangesAlgorithmsTest, UniqueTest) {
+    std::vector<int> v = {1, 1, 2, 2, 3, 1, 1};
+    auto [first, last] = std::ranges::unique(v);
+    v.erase(first, last);
+
+    std::vector<int> expected = {1, 2, 3, 1};
+    EXPECT_EQ(v, expected);
+}
+
+TEST(RangesAlgorithmsTest, RotateTest) {
+    std::vector<int> v = {1, 2, 3, 4, 5};
+    auto it = std::ranges::find(v, 3);
+    std::ranges::rotate(v, it);
+
+    std::vector<int> expected = {3, 4, 5, 1, 2};
+    EXPECT_EQ(v, expected);
+}
+
+TEST(RangesAlgorithmsTest, SampleTest) {
+    std::vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    std::vector<int> out;
+    std::mt19937 gen{std::random_device{}()};
+
+    std::ranges::sample(v, std::back_inserter(out), 3, gen);
+
+    EXPECT_EQ(out.size(), 3);
+    for (int n : out) {
+        EXPECT_TRUE(std::ranges::contains(v, n));
+    }
+}
+
+auto transform_if(const std::vector<int>& r, std::back_insert_iterator<std::vector<int>> result,
+                  bool (*pred)(int), int (*op)(int)) {
+    std::vector<int> temp;
+    std::ranges::copy_if(r, std::back_inserter(temp), pred);
+    return std::ranges::transform(temp, result, op).out;
+}
+
+TEST(CustomAlgorithmsTest, TransformIfCombinedTest) {
+    std::vector<int> v = {1, 2, 3, 4, 5, 6};
+    std::vector<int> result;
+
+    transform_if(v, std::back_inserter(result),
+                 [](int n) { return n % 2 == 0; },
+                 [](int n) { return n * n; }
+    );
+
+    std::vector<int> expected = {4, 16, 36};
+    EXPECT_EQ(result, expected);
+}
+
+double calculate_mae(const std::vector<double>& actual, const std::vector<double>& predicted) {
+    if (actual.empty() || actual.size() != predicted.size()) return 0.0;
+    std::vector<double> diffs;
+    diffs.reserve(actual.size());
+    std::transform(actual.begin(), actual.end(), predicted.begin(), std::back_inserter(diffs),
+                   [](double a, double p) { return std::abs(a - p); });
+    double sum = std::accumulate(diffs.begin(), diffs.end(), 0.0);
+    return sum / actual.size();
+}
+
+double calculate_mse(const std::vector<double>& actual, const std::vector<double>& predicted) {
+    if (actual.empty() || actual.size() != predicted.size()) return 0.0;
+    std::vector<double> sq_diffs;
+    sq_diffs.reserve(actual.size());
+    std::transform(actual.begin(), actual.end(), predicted.begin(), std::back_inserter(sq_diffs),
+                   [](double a, double p) {
+                       double d = a - p;
+                       return d * d;
+                   });
+    double sum = std::accumulate(sq_diffs.begin(), sq_diffs.end(), 0.0);
+    return sum / actual.size();
+}
+
+TEST(ErrorMetricsTest, MAETest) {
+    std::vector<double> actual = {1.0, 2.0, 3.0, 4.0};
+    std::vector<double> predicted = {1.5, 2.5, 2.5, 4.5};
+
+    double mae = calculate_mae(actual, predicted);
+    EXPECT_NEAR(mae, 0.5, 1e-9);
+}
+
+TEST(ErrorMetricsTest, MSETest) {
+    std::vector<double> actual = {1.0, 2.0, 3.0, 4.0};
+    std::vector<double> predicted = {1.5, 2.5, 2.5, 4.5};
+
+    double mse = calculate_mse(actual, predicted);
+    EXPECT_NEAR(mse, 0.25, 1e-9);
+}
+
+TEST(RangesViewsTest, FilterTest) {
+    std::vector<int> v = {1, 2, 3, 4, 5, 6};
+    auto view = v | std::views::filter([](int n) { return n % 2 == 0; });
+
+    std::vector<int> result(view.begin(), view.end());
+    std::vector<int> expected = {2, 4, 6};
+    EXPECT_EQ(result, expected);
+}
+
+TEST(RangesViewsTest, DropTest) {
+    std::vector<int> v = {1, 2, 3, 4, 5};
+    auto view = v | std::views::drop(2);
+
+    std::vector<int> result(view.begin(), view.end());
+    std::vector<int> expected = {3, 4, 5};
+    EXPECT_EQ(result, expected);
+}
+
+TEST(RangesViewsTest, JoinTest) {
+    std::vector<std::string> words = {"Hello", " ", "World"};
+    auto view = words | std::views::join;
+
+    std::string result(view.begin(), view.end());
+    EXPECT_EQ(result, "Hello World");
+}
+
+TEST(RangesViewsTest, ZipTest) {
+    std::vector<int> v1 = {1, 2, 3};
+    std::vector<std::string> v2 = {"one", "two", "three"};
+
+    auto view = std::views::zip(v1, v2);
+
+    auto it = view.begin();
+    auto [val_int, val_str] = *it;
+
+    EXPECT_EQ(val_int, 1);
+    EXPECT_EQ(val_str, "one");
+
+    ++it;
+    auto [val_int2, val_str2] = *it;
+    EXPECT_EQ(val_int2, 2);
+    EXPECT_EQ(val_str2, "two");
+}
+
+TEST(RangesViewsTest, StrideTest) {
+    std::vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8};
+    auto view = v | std::views::stride(3);
+
+    std::vector<int> result(view.begin(), view.end());
+    std::vector<int> expected = {1, 4, 7};
+    EXPECT_EQ(result, expected);
+}
+
 class Fibonacci : public std::ranges::view_interface<Fibonacci> {
 private:
+
     class Iterator {
     public:
-        using iterator_concept = std::forward_iterator_tag;
-        using iterator_category = std::forward_iterator_tag;
-        using value_type = size_t;
+
+        using value_type = int;
         using difference_type = std::ptrdiff_t;
+        using iterator_category = std::forward_iterator_tag;
 
-        Iterator() = default;
-        explicit Iterator(size_t limit) : max_index(limit) {}
+        Iterator() : m_previous(0), m_current(1), m_count(0) {}
 
-        value_type operator*() const { return current; }
+        explicit Iterator(int limit) : m_previous(0), m_current(1), m_count(limit) {}
+
+        int operator*() const {
+            return m_current;
+        }
 
         Iterator& operator++() {
-            size_t next_val = current + next;
-            current = next;
-            next = next_val;
-            index++;
+            int temp = m_previous + m_current;
+            m_previous = m_current;
+            m_current = temp;
+            m_count--;
             return *this;
         }
 
         Iterator operator++(int) {
-            Iterator tmp = *this;
+            Iterator temp = *this;
             ++(*this);
-            return tmp;
+            return temp;
         }
 
         bool operator==(const Iterator& other) const {
-            return index == other.index;
+            return m_count == other.m_count;
         }
 
-        // Enable comparison with sentinel
-        bool operator==(std::default_sentinel_t) const {
-            return index >= max_index;
+        bool operator!=(const Iterator& other) const {
+            return !(*this == other);
         }
 
     private:
-        size_t current = 0;
-        size_t next = 1;
-        size_t index = 0;
-        size_t max_index = std::numeric_limits<size_t>::max();
+
+        int m_previous;
+        int m_current;
+        int m_count;
     };
 
-    size_t count;
-
 public:
-    Fibonacci() : count(std::numeric_limits<size_t>::max()) {}
-    explicit Fibonacci(size_t n) : count(n) {}
 
-    Iterator begin() const { return Iterator(count); }
-    std::default_sentinel_t end() const { return std::default_sentinel; }
+    Fibonacci() : m_limit(-1) {}
+
+    explicit Fibonacci(int limit) : m_limit(limit) {}
+
+    Iterator begin() const {
+        return Iterator(m_limit);
+    }
+
+    Iterator end() const {
+        return Iterator(0);
+    }
+
+private:
+
+    int m_limit;
 };
 
-// 2) MAE and MSE without relying on zip (C++23)
-
-template <std::ranges::input_range R1, std::ranges::input_range R2>
-double calculate_mae(R1&& r1, R2&& r2) {
-    auto it1 = std::begin(r1);
-    auto end1 = std::end(r1);
-    auto it2 = std::begin(r2);
-    auto end2 = std::end(r2);
-
-    double sum = 0.0;
-    size_t count = 0;
-    while (it1 != end1 && it2 != end2) {
-        sum += std::abs(static_cast<double>(*it1) - static_cast<double>(*it2));
-        ++it1; ++it2; ++count;
+TEST(FibonacciViewTest, SequenceTest) {
+    Fibonacci fib(7);
+    std::vector<int> result;
+    for (int val : fib) {
+        result.push_back(val);
     }
-    return count ? sum / static_cast<double>(count) : 0.0;
+    std::vector<int> expected = {1, 1, 2, 3, 5, 8, 13};
+    EXPECT_EQ(result, expected);
 }
 
-template <std::ranges::input_range R1, std::ranges::input_range R2>
-double calculate_mse(R1&& r1, R2&& r2) {
-    auto it1 = std::begin(r1);
-    auto end1 = std::end(r1);
-    auto it2 = std::begin(r2);
-    auto end2 = std::end(r2);
+TEST(FibonacciViewTest, ViewInterfaceTest) {
+    Fibonacci fib(5);
+    EXPECT_FALSE(fib.empty());
+    EXPECT_EQ(fib.front(), 1);
+}
 
-    double sum = 0.0;
-    size_t count = 0;
-    while (it1 != end1 && it2 != end2) {
-        double diff = static_cast<double>(*it1) - static_cast<double>(*it2);
-        sum += diff * diff;
-        ++it1; ++it2; ++count;
+TEST(FibonacciViewTest, RangeAdaptorTest) {
+    Fibonacci fib(10);
+    auto even_fibs = fib | std::views::filter([](int n) { return n % 2 == 0; });
+
+    std::vector<int> result;
+    for (int val : even_fibs) {
+        result.push_back(val);
     }
-    return count ? sum / static_cast<double>(count) : 0.0;
+    std::vector<int> expected = {2, 8, 34};
+    EXPECT_EQ(result, expected);
 }
 
-// 3) Tests
+TEST(FibonacciViewTest, TakeTest) {
+    Fibonacci fib(-1);
+    auto first_five = fib | std::views::take(5);
 
-TEST(RangesAlgoTest, StandardAlgorithms) {
-    // ranges::replace
-    std::vector<int> v = {1, 2, 2, 3};
-    std::ranges::replace(v, 2, 5);
-    EXPECT_EQ(v[1], 5);
-    EXPECT_EQ(v[2], 5);
-
-    // ranges::fill
-    std::ranges::fill(v, 10);
-    for (int n : v) EXPECT_EQ(n, 10);
-
-    // ranges::unique
-    std::vector<int> v2 = {1, 1, 2, 2, 3};
-    auto [last, end] = std::ranges::unique(v2);
-    v2.erase(last, end);
-    EXPECT_EQ(v2.size(), 3);
-    EXPECT_EQ(v2[1], 2);
-
-    // ranges::rotate
-    std::vector<int> v3 = {1, 2, 3, 4};
-    std::ranges::rotate(v3, v3.begin() + 1);
-    EXPECT_EQ(v3[0], 2);
-    EXPECT_EQ(v3[3], 1);
-
-    // ranges::sample
-    std::vector<int> v4 = {1,2,3,4,5};
-    std::vector<int> out;
-    std::mt19937 gen(42);
-    std::ranges::sample(v4, std::back_inserter(out), 3, gen);
-    EXPECT_EQ(out.size(), 3);
-}
-
-TEST(RangesViewsTest, PipeCompositions) {
-    std::vector<int> data = {1,2,3,4,5,6,7,8,9,10};
-    // filter, drop, stride
-    auto res = data
-        | std::views::filter([](int n) { return n % 2 == 0; })
-        | std::views::drop(1)
-        | std::views::stride(2)
-        | std::views::common;
-
-    std::vector<int> vec(res.begin(), res.end());
-
-    EXPECT_EQ(vec.size(), 2);
-    EXPECT_EQ(vec[0], 4);
-    EXPECT_EQ(vec[1], 8);
-}
-
-TEST(FibonacciTest, ViewInterfaceImplementation) {
-    Fibonacci fib(7); // 0, 1, 1, 2, 3, 5, 8
-
-    std::vector<size_t> expected = {0, 1, 1, 2, 3, 5, 8};
-    std::vector<size_t> actual;
-    for (auto n : fib) actual.push_back(n);
-    EXPECT_EQ(actual, expected);
-
-    auto even_fib = fib | std::views::filter([](size_t n){ return n % 2 == 0; }) | std::views::common;
-    std::vector<size_t> even_actual(even_fib.begin(), even_fib.end());
-    std::vector<size_t> even_expected = {0, 2, 8};
-    EXPECT_EQ(even_actual, even_expected);
+    std::vector<int> result;
+    for (int val : first_five) {
+        result.push_back(val);
+    }
+    std::vector<int> expected = {1, 1, 2, 3, 5};
+    EXPECT_EQ(result, expected);
 }
 
 int main(int argc, char **argv) {
