@@ -8,21 +8,24 @@
 #include <boost/graph/adjacency_matrix.hpp>
 #include <boost/graph/graph_traits.hpp>
 
-int main() {
+using Graph = boost::adjacency_matrix<boost::undirectedS, boost::no_property, boost::property<boost::edge_weight_t, int>>;
+
+int main()
+{
     const int num_vertices = 10;
 
     std::random_device rd;
     std::default_random_engine engine(rd());
     std::uniform_int_distribution<int> dist(1, 10);
 
-    typedef boost::adjacency_matrix<boost::undirectedS, boost::no_property,
-                                    boost::property<boost::edge_weight_t, int>> Graph;
     Graph g(num_vertices);
 
     int matrix[num_vertices][num_vertices];
-    for (int i = 0; i < num_vertices; ++i) {
+    for (int i = 0; i < num_vertices; ++i)
+    {
         matrix[i][i] = 0;
-        for (int j = i + 1; j < num_vertices; ++j) {
+        for (int j = i + 1; j < num_vertices; ++j)
+        {
             int weight = dist(engine);
             boost::add_edge(i, j, weight, g);
             matrix[i][j] = weight;
