@@ -34,8 +34,10 @@ int main()
     }
 
     std::cout << "Graph Adjacency Matrix (edge weights):" << std::endl;
-    for (int i = 0; i < num_vertices; ++i) {
-        for (int j = 0; j < num_vertices; ++j) {
+    for (int i = 0; i < num_vertices; ++i)
+    {
+        for (int j = 0; j < num_vertices; ++j)
+        {
             std::cout << matrix[i][j] << "\t";
         }
         std::cout << std::endl;
@@ -75,7 +77,8 @@ int main()
     } while (std::next_permutation(vertices.begin(), vertices.end()));
 
     std::cout << "Optimal vertex traversal sequence:" << std::endl;
-    for (size_t i = 0; i < best_path.size(); ++i) {
+    for (size_t i = 0; i < best_path.size(); ++i)
+    {
         std::cout << best_path[i] << (i == best_path.size() - 1 ? "" : " -> ");
     }
     std::cout << std::endl;
