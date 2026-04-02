@@ -6,7 +6,6 @@
 #include <limits>
 
 #include <boost/graph/adjacency_matrix.hpp>
-#include <boost/graph/graph_traits.hpp>
 
 using Graph = boost::adjacency_matrix<boost::undirectedS, boost::no_property, boost::property<boost::edge_weight_t, int>>;
 
@@ -52,13 +51,15 @@ int main()
 
     auto weight_map = boost::get(boost::edge_weight, g);
 
-    do {
+    do
+    {
         int current_cost = 0;
 
         auto e_first = boost::edge(0, vertices[0], g);
         current_cost += weight_map[e_first.first];
 
-        for (size_t i = 0; i < vertices.size() - 1; ++i) {
+        for (size_t i = 0; i < vertices.size() - 1; ++i)
+        {
             auto e = boost::edge(vertices[i], vertices[i+1], g);
             current_cost += weight_map[e.first];
         }
@@ -66,14 +67,14 @@ int main()
         auto e_last = boost::edge(vertices.back(), 0, g);
         current_cost += weight_map[e_last.first];
 
-        if (current_cost < min_cost) {
+        if (current_cost < min_cost)
+        {
             min_cost = current_cost;
             best_path.clear();
             best_path.push_back(0);
             best_path.insert(best_path.end(), vertices.begin(), vertices.end());
             best_path.push_back(0);
         }
-
     } while (std::next_permutation(vertices.begin(), vertices.end()));
 
     std::cout << "Optimal vertex traversal sequence:" << std::endl;
