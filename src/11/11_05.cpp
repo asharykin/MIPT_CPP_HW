@@ -167,25 +167,29 @@ TEST(RangesViewsTest, StrideTest) {
     EXPECT_EQ(result, expected);
 }
 
-class Fibonacci : public std::ranges::view_interface<Fibonacci> {
+class Fibonacci : public std::ranges::view_interface<Fibonacci>
+{
 private:
 
-    class Iterator {
+    class Iterator
+    {
     public:
 
         using value_type = int;
         using difference_type = std::ptrdiff_t;
         using iterator_category = std::forward_iterator_tag;
 
-        Iterator() : m_previous(0), m_current(1), m_count(0) {}
+        Iterator() : m_previous(0), m_current(1), m_count(0) { }
 
-        explicit Iterator(int limit) : m_previous(0), m_current(1), m_count(limit) {}
+        explicit Iterator(int limit) : m_previous(0), m_current(1), m_count(limit) { }
 
-        int operator*() const {
+        int operator*() const
+        {
             return m_current;
         }
 
-        Iterator& operator++() {
+        Iterator& operator++()
+        {
             int temp = m_previous + m_current;
             m_previous = m_current;
             m_current = temp;
@@ -193,17 +197,20 @@ private:
             return *this;
         }
 
-        Iterator operator++(int) {
+        Iterator operator++(int)
+        {
             Iterator temp = *this;
             ++(*this);
             return temp;
         }
 
-        bool operator==(const Iterator& other) const {
+        bool operator==(const Iterator& other) const
+        {
             return m_count == other.m_count;
         }
 
-        bool operator!=(const Iterator& other) const {
+        bool operator!=(const Iterator& other) const
+        {
             return !(*this == other);
         }
 
@@ -216,15 +223,17 @@ private:
 
 public:
 
-    Fibonacci() : m_limit(-1) {}
+    Fibonacci() : m_limit(-1) { }
 
-    explicit Fibonacci(int limit) : m_limit(limit) {}
+    explicit Fibonacci(int limit) : m_limit(limit) { }
 
-    Iterator begin() const {
+    Iterator begin() const
+    {
         return Iterator(m_limit);
     }
 
-    Iterator end() const {
+    Iterator end() const
+    {
         return Iterator(0);
     }
 
@@ -233,47 +242,55 @@ private:
     int m_limit;
 };
 
-TEST(FibonacciViewTest, SequenceTest) {
+TEST(FibonacciViewTest, SequenceTest)
+{
     Fibonacci fib(7);
     std::vector<int> result;
-    for (int val : fib) {
+    for (int val : fib)
+    {
         result.push_back(val);
     }
     std::vector<int> expected = {1, 1, 2, 3, 5, 8, 13};
     EXPECT_EQ(result, expected);
 }
 
-TEST(FibonacciViewTest, ViewInterfaceTest) {
+TEST(FibonacciViewTest, ViewInterfaceTest)
+{
     Fibonacci fib(5);
     EXPECT_FALSE(fib.empty());
     EXPECT_EQ(fib.front(), 1);
 }
 
-TEST(FibonacciViewTest, RangeAdaptorTest) {
+TEST(FibonacciViewTest, RangeAdaptorTest)
+{
     Fibonacci fib(10);
     auto even_fibs = fib | std::views::filter([](int n) { return n % 2 == 0; });
 
     std::vector<int> result;
-    for (int val : even_fibs) {
+    for (int val : even_fibs)
+    {
         result.push_back(val);
     }
     std::vector<int> expected = {2, 8, 34};
     EXPECT_EQ(result, expected);
 }
 
-TEST(FibonacciViewTest, TakeTest) {
+TEST(FibonacciViewTest, TakeTest)
+{
     Fibonacci fib(-1);
     auto first_five = fib | std::views::take(5);
 
     std::vector<int> result;
-    for (int val : first_five) {
+    for (int val : first_five)
+    {
         result.push_back(val);
     }
     std::vector<int> expected = {1, 1, 2, 3, 5};
     EXPECT_EQ(result, expected);
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
