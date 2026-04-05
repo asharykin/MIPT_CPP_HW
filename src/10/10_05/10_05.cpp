@@ -2,204 +2,176 @@
 
 #include <vector>
 #include <string>
-#include <iostream>
 #include <random>
 #include <unordered_set>
 #include <functional>
 #include <fstream>
 
-using HashFunc = std::function<unsigned int(const std::string&)>;
-
-unsigned int RSHash(const std::string& str)
-{
-    unsigned int b = 378551;
-    unsigned int a = 63689;
-    unsigned int hash = 0;
-    for (char c : str)
-    {
-        hash = hash * a + static_cast<unsigned int>(c);
-        a *= b;
-    }
-    return hash;
-}
-
-unsigned int JSHash(const std::string& str)
-{
-    unsigned int hash = 1315423911;
-    for (char c : str)
-    {
-        hash ^= ((hash << 5) + c + (hash >> 2));
-    }
-    return hash;
-}
-
-unsigned int PJWHash(const std::string& str)
-{
-    unsigned int hash = 0;
-    unsigned int test = 0;
-    for (char c : str)
-    {
-        hash = (hash << 4) + c;
-        if ((test = hash & 0xF0000000) != 0)
-        {
-            hash ^= (test >> 24);
-            hash &= ~test;
-        }
-    }
-    return hash;
-}
-
-unsigned int ELFHash(const std::string& str)
-{
-    unsigned int hash = 0;
-    unsigned int x = 0;
-    for (char c : str)
-    {
-        hash = (hash << 4) + c;
-        if ((x = hash & 0xF0000000) != 0)
-        {
-            hash ^= (x >> 24);
-        }
-        hash &= ~x;
-    }
-    return hash;
-}
-
-unsigned int BKDRHash(const std::string& str)
-{
-    unsigned int seed = 131;
-    unsigned int hash = 0;
-    for (char c : str)
-    {
-        hash = hash * seed + c;
-    }
-    return hash;
-}
-
-unsigned int SDBMHash(const std::string& str)
-{
-    unsigned int hash = 0;
-    for (char c : str)
-    {
-        hash = c + (hash << 6) + (hash << 16) - hash;
-    }
-    return hash;
-}
-
-unsigned int DJBHash(const std::string& str)
-{
-    unsigned int hash = 5381;
-    for (char c : str)
-    {
-        hash = ((hash << 5) + hash) + c;
-    }
-    return hash;
-}
-
-unsigned int DEKHash(const std::string& str)
-{
-    unsigned int hash = str.length();
-    for (char c : str)
-    {
-        hash = ((hash << 5) ^ (hash >> 27)) ^ c;
-    }
-    return hash;
-}
-
-unsigned int APHash(const std::string& str)
-{
-    unsigned int hash = 0xAAAAAAAA;
-    for (std::size_t i = 0; i < str.size(); ++i)
-    {
-        if ((i & 1) == 0)
-            hash ^= ((hash << 7) ^ str[i] * (hash >> 3));
-        else
-            hash ^= (~((hash << 11) + (str[i] ^ (hash >> 5))));
-    }
-    return hash;
-}
-
-std::vector<std::string> generate_strings(std::size_t count)
-{
-    std::vector<std::string> result;
-    std::mt19937 gen(std::random_device{}());
-    std::uniform_int_distribution<int> char_dist('a', 'z');
-
-    for (std::size_t i = 0; i < count; ++i)
-    {
-        std::string s(10, 'a');
-        for (char& c : s)
-            c = static_cast<char>(char_dist(gen));
-        result.push_back(s);
+uint32_t process_rs(const std::string& input) {
+    uint32_t magic_b = 378551;
+    uint32_t magic_a = 63689;
+    uint32_t result = 0;
+    for (char sym : input) {
+        result = result * magic_a + static_cast<uint32_t>(sym);
+        magic_a *= magic_b;
     }
     return result;
 }
 
-std::size_t count_collisions(const std::vector<std::string>& data,
-                             const HashFunc& hash_func,
-                             unsigned int mod)
-{
-    std::unordered_set<unsigned int> hashes;
-
-    for (const auto& s : data)
-    {
-        hashes.insert(hash_func(s) % mod);
+uint32_t process_js(const std::string& input) {
+    uint32_t acc = 1315423911;
+    for (char sym : input) {
+        acc ^= ((acc << 5) + sym + (acc >> 2));
     }
-
-    return data.size() - hashes.size();
+    return acc;
 }
 
-TEST(HashTest, BasicFunctionality)
-{
-    std::string s = "hello";
-    EXPECT_NE(RSHash(s), 0u);
-    EXPECT_NE(DJBHash(s), 0u);
-    EXPECT_NE(SDBMHash(s), 0u);
+uint32_t process_pjw(const std::string& input) {
+    uint32_t val = 0;
+    uint32_t high_bits = 0;
+    for (char sym : input) {
+        val = (val << 4) + sym;
+        if ((high_bits = val & 0xF0000000) != 0) {
+            val ^= (high_bits >> 24);
+            val &= ~high_bits;
+        }
+    }
+    return val;
 }
 
-TEST(HashTest, CollisionCheck)
-{
-    auto data = generate_strings(100);
-    std::size_t collisions = count_collisions(data, DJBHash, 1000);
-    EXPECT_LE(collisions, 100u);
+uint32_t process_elf(const std::string& input) {
+    uint32_t state = 0;
+    uint32_t mask = 0;
+    for (char sym : input) {
+        state = (state << 4) + sym;
+        if ((mask = state & 0xF0000000) != 0) {
+            state ^= (mask >> 24);
+        }
+        state &= ~mask;
+    }
+    return state;
 }
 
-TEST(HashTest, CollisionExperiment)
-{
-    std::vector<std::pair<std::string, HashFunc>> functions = {
-        {"RS", RSHash}, {"JS", JSHash}, {"PJW", PJWHash},
-        {"ELF", ELFHash}, {"BKDR", BKDRHash}, {"SDBM", SDBMHash},
-        {"DJB", DJBHash}, {"DEK", DEKHash}, {"AP", APHash}
+uint32_t process_bkdr(const std::string& input) {
+    uint32_t multiplier = 131;
+    uint32_t res = 0;
+    for (char sym : input) {
+        res = res * multiplier + sym;
+    }
+    return res;
+}
+
+uint32_t process_sdbm(const std::string& input) {
+    uint32_t hash_val = 0;
+    for (char sym : input) {
+        hash_val = sym + (hash_val << 6) + (hash_val << 16) - hash_val;
+    }
+    return hash_val;
+}
+
+uint32_t process_djb(const std::string& input) {
+    uint32_t current = 5381;
+    for (char sym : input) {
+        current = ((current << 5) + current) + sym;
+    }
+    return current;
+}
+
+uint32_t process_dek(const std::string& input) {
+    uint32_t final_val = static_cast<uint32_t>(input.length());
+    for (char sym : input) {
+        final_val = ((final_val << 5) ^ (final_val >> 27)) ^ sym;
+    }
+    return final_val;
+}
+
+uint32_t process_ap(const std::string& input) {
+    uint32_t h = 0xAAAAAAAA;
+    for (size_t idx = 0; idx < input.size(); ++idx) {
+        if ((idx & 1) == 0)
+            h ^= ((h << 7) ^ input[idx] * (h >> 3));
+        else
+            h ^= (~((h << 11) + (input[idx] ^ (h >> 5))));
+    }
+    return h;
+}
+
+std::vector<std::string> spawn_mock_strings(size_t total, size_t length = 12) {
+    std::vector<std::string> collection;
+    std::random_device rd;
+    std::mt19937 engine(rd());
+    std::uniform_int_distribution<int> range('A', 'Z');
+
+    collection.reserve(total);
+    for (size_t i = 0; i < total; ++i) {
+        std::string buffer;
+        for (size_t j = 0; j < length; ++j) {
+            buffer += static_cast<char>(range(engine));
+        }
+        collection.emplace_back(std::move(buffer));
+    }
+    return collection;
+}
+
+using ChecksumLogic = std::function<uint32_t(const std::string&)>;
+
+size_t analyze_collision_rate(const std::vector<std::string>& payload,
+                              const ChecksumLogic& algo,
+                              uint32_t bucket_size) {
+    std::unordered_set<uint32_t> unique_slots;
+    for (const auto& item : payload) {
+        unique_slots.insert(algo(item) % bucket_size);
+    }
+    return payload.size() - unique_slots.size();
+}
+
+
+TEST(AlgorithmAudit, SanityCheck) {
+    const std::string sample = "test_vector";
+    ASSERT_GT(process_rs(sample), 0u);
+    ASSERT_GT(process_djb(sample), 0u);
+    ASSERT_GT(process_sdbm(sample), 0u);
+}
+
+TEST(AlgorithmAudit, FullBenchmarkSuite) {
+    struct AlgoEntry {
+        std::string label;
+        ChecksumLogic procedure;
     };
 
-    const unsigned int MOD = 1000;
+    std::vector<AlgoEntry> registry = {
+        {"RS_ALGO", process_rs},   {"JS_ALGO", process_js},
+        {"PJW_ALGO", process_pjw}, {"ELF_ALGO", process_elf},
+        {"BKDR_ALGO", process_bkdr}, {"SDBM_ALGO", process_sdbm},
+        {"DJB_ALGO", process_djb}, {"DEK_ALGO", process_dek},
+        {"AP_ALGO", process_ap}
+    };
 
-    std::ofstream out("data.txt");
-    if (!out.is_open())
-    {
-        FAIL() << "Cannot open data.txt for writing";
+    const uint32_t HASH_SPACE = 1024;
+    std::ofstream report("benchmark_results.csv");
+
+    if (!report.is_open()) {
+        FAIL() << "Failed to initialize output stream.";
     }
 
-    for (std::size_t size = 100; size <= 2000; size += 300)
-    {
-        auto data = generate_strings(size);
+    report << "Sample_Size";
+    for (const auto& entry : registry) report << "," << entry.label;
+    report << "\n";
 
-        out << size;
+    for (size_t current_batch = 150; current_batch <= 2500; current_batch += 400) {
+        auto test_data = spawn_mock_strings(current_batch);
+        report << current_batch;
 
-        for (auto& [name, func] : functions)
-        {
-            std::size_t collisions = count_collisions(data, func, MOD);
-            out << " " << collisions;
+        for (auto& item : registry) {
+            size_t conflicts = analyze_collision_rate(test_data, item.procedure, HASH_SPACE);
+            report << "," << conflicts;
         }
-
-        out << "\n";
+        report << "\n";
     }
-
-    SUCCEED();
+    report.close();
 }
 
-int main(int argc, char **argv)
-{
-    ::testing::InitGoogleTest(&argc, argv);
+int main(int argc, char **argv) {
+    testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

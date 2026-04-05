@@ -1,25 +1,47 @@
 import matplotlib.pyplot as plt
+import csv
+import os
 
-sizes = []
-data = [[] for _ in range(9)]
+def visualize_performance():
+    algorithm_labels = [
+        "RS_ALGO", "JS_ALGO", "PJW_ALGO", "ELF_ALGO",
+        "BKDR_ALGO", "SDBM_ALGO", "DJB_ALGO", "DEK_ALGO", "AP_ALGO"
+    ]
 
-with open("data.txt") as f:
-    for line in f:
-        line = line.strip()
-        if not line or not line[0].isdigit():
-            continue
+    input_file = "benchmark_results.csv"
 
-        parts = list(map(int, line.split()))
-        sizes.append(parts[0])
-        for i in range(9):
-            data[i].append(parts[i+1])
+    if not os.path.exists(input_file):
+        return
 
-names = ["RS","JS","PJW","ELF","BKDR","SDBM","DJB","DEK","AP"]
+    sample_sizes = []
+    collision_metrics = [[] for _ in range(len(algorithm_labels))]
 
-for i in range(9):
-    plt.plot(sizes, data[i], label=names[i])
+    try:
+        with open(input_file, mode='r', encoding='utf-8') as stream:
+            reader = csv.DictReader(stream)
+            for row in reader:
+                sample_sizes.append(int(row['Sample_Size']))
+                for label in algorithm_labels:
+                    idx = algorithm_labels.index(label)
+                    collision_metrics[idx].append(int(row[label]))
+    except Exception:
+        return
 
-plt.legend()
-plt.xlabel("Number of strings")
-plt.ylabel("Collisions")
-plt.show()
+    plt.figure(figsize=(12, 7))
+    plt.style.use('seaborn-v0_8-darkgrid')
+
+    for i, label in enumerate(algorithm_labels):
+        plt.plot(sample_sizes, collision_metrics[i], marker='o', linestyle='-', label=label, linewidth=2)
+
+    plt.title("Сравнительный анализ коллизий хэш-функций", fontsize=14, fontweight='bold')
+    plt.xlabel("Количество входных строк (Sample Size)", fontsize=12)
+    plt.ylabel("Зафиксированные коллизии (Conflicts)", fontsize=12)
+
+    plt.grid(True, which='both', linestyle='--', alpha=0.5)
+    plt.legend(loc='upper left', frameon=True, shadow=True)
+
+    plt.tight_layout()
+    plt.show()
+
+if __name__ == "__main__":
+    visualize_performance()
