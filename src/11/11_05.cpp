@@ -114,7 +114,8 @@ TEST(ErrorMetricsTest, MSETest) {
     EXPECT_NEAR(mse, 0.25, 1e-9);
 }
 
-TEST(RangesViewsTest, FilterTest) {
+TEST(RangesViewsTest, FilterTest)
+{
     std::vector<int> v = {1, 2, 3, 4, 5, 6};
     auto view = v | std::views::filter([](int n) { return n % 2 == 0; });
 
@@ -123,7 +124,8 @@ TEST(RangesViewsTest, FilterTest) {
     EXPECT_EQ(result, expected);
 }
 
-TEST(RangesViewsTest, DropTest) {
+TEST(RangesViewsTest, DropTest)
+{
     std::vector<int> v = {1, 2, 3, 4, 5};
     auto view = v | std::views::drop(2);
 
@@ -132,7 +134,8 @@ TEST(RangesViewsTest, DropTest) {
     EXPECT_EQ(result, expected);
 }
 
-TEST(RangesViewsTest, JoinTest) {
+TEST(RangesViewsTest, JoinTest)
+{
     std::vector<std::string> words = {"Hello", " ", "World"};
     auto view = words | std::views::join;
 
@@ -140,7 +143,8 @@ TEST(RangesViewsTest, JoinTest) {
     EXPECT_EQ(result, "Hello World");
 }
 
-TEST(RangesViewsTest, ZipTest) {
+TEST(RangesViewsTest, ZipTest)
+{
     std::vector<int> v1 = {1, 2, 3};
     std::vector<std::string> v2 = {"one", "two", "three"};
 
@@ -158,7 +162,8 @@ TEST(RangesViewsTest, ZipTest) {
     EXPECT_EQ(val_str2, "two");
 }
 
-TEST(RangesViewsTest, StrideTest) {
+TEST(RangesViewsTest, StrideTest)
+{
     std::vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8};
     auto view = v | std::views::stride(3);
 
