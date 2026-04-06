@@ -19,9 +19,9 @@ bounded_matrix<uint64_t, 2, 2> matrix_pow(bounded_matrix<uint64_t, 2, 2> A, unsi
 
     while (n > 0) {
         if (n & 1) { // like (n % 2 == 1) but faster
-            R = prod(R, A); // R * A
+            R = prod(R, A);
         }
-        A = prod(A, A); // A * A
+        A = prod(A, A);
         n >>= 1; // like (n /= 2) but faster
     }
     return R;
