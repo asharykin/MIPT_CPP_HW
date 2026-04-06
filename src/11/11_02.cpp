@@ -51,7 +51,7 @@ auto lambda_auto = [](int x) NOINLINE
     return x + 1;
 };
 
-std::function std_func = [](int x) NOINLINE
+std::function<int(int)> std_func = [](int x) NOINLINE
 {
     return x + 1;
 };
