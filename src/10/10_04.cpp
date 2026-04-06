@@ -2,8 +2,6 @@
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/operation.hpp>
 
-// 'uint64_t' is basically 'unsigned long long int'
-
 using boost::numeric::ublas::bounded_matrix;
 
 using boost::numeric::ublas::identity_matrix;
