@@ -77,13 +77,9 @@ private:
         add_to_counter(b0, b1, b2, DL);
         add_to_counter(b0, b1, b2, DR);
 
-        // Identify cells with exactly 3 neighbors (binary 011)
         uint64_t three_neighbors = b1 & b0 & ~b2;
-        // Identify cells with exactly 2 neighbors (binary 010)
         uint64_t two_neighbors   = b1 & ~b0 & ~b2;
 
-        // Birth if has 3 neighbors
-        // Survival if has 2 neighbors AND currently alive
         grid = three_neighbors | (grid & two_neighbors);
     }
 
