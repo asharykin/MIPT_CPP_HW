@@ -9,6 +9,7 @@ int main() {
     const char* ru_locale_name = "ru_RU.UTF-8";
     const char* us_locale_name = "en_US.UTF-8";
 
+    std::cout << "Input: ";
     std::string input_line;
     std::getline(std::cin, input_line);
 
@@ -37,5 +38,5 @@ int main() {
 
     long double amount_cents = amount_kopeks * rub_to_usd_rate;
     output_stream << std::showbase << std::put_money(amount_cents, false);
-    std::cout << output_stream.str() << std::endl;
+    std::cout << "Output: " << output_stream.str() << std::endl;
 }
