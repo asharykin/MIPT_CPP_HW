@@ -6,7 +6,9 @@
 
 int main()
 {
+    // I got this info from https://finance.rambler.ru/calculators/converter/1-RUB-USD/ on 04/04/2026
     const double rub_to_usd_rate = 0.0125;
+
     const char* ru_locale_name = "ru_RU.UTF-8";
     const char* us_locale_name = "en_US.UTF-8";
 
