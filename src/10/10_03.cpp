@@ -56,16 +56,15 @@ private:
         const uint64_t NOT_RIGHT_COL = 0x7F7F7F7F7F7F7F7FULL;
 
         // Shift the entire grid to align each cell with its 8 possible neighbors
-        uint64_t L  = (grid & NOT_LEFT_COL)  >> 1; // Neighbor to the Left (West)
-        uint64_t R  = (grid & NOT_RIGHT_COL) << 1; // Neighbor to the Right (East)
-        uint64_t U  = grid >> 8; // Neighbor Up (North)
-        uint64_t D  = grid << 8; // Neighbor Down (South)
-        uint64_t UL = (grid & NOT_LEFT_COL)  >> 9; // Neighbor Up-Left (North-West)
-        uint64_t UR = (grid & NOT_RIGHT_COL) >> 7; // Neighbor Up-Right (North-East)
-        uint64_t DL = (grid & NOT_LEFT_COL)  << 7; // Neighbor Down-Left (South-West)
-        uint64_t DR = (grid & NOT_RIGHT_COL) << 9; // Neighbor Down-Right (South-East)
+        uint64_t L  = (grid & NOT_LEFT_COL)  >> 1;
+        uint64_t R  = (grid & NOT_RIGHT_COL) << 1;
+        uint64_t U  = grid >> 8;
+        uint64_t D  = grid << 8;
+        uint64_t UL = (grid & NOT_LEFT_COL)  >> 9;
+        uint64_t UR = (grid & NOT_RIGHT_COL) >> 7;
+        uint64_t DL = (grid & NOT_LEFT_COL)  << 7;
+        uint64_t DR = (grid & NOT_RIGHT_COL) << 9;
 
-        // 3-bit vertical counter (b2, b1, b0) to store neighbor counts (0-8) for each cell
         uint64_t b0 = 0, b1 = 0, b2 = 0;
 
         add_to_counter(b0, b1, b2, L);
