@@ -84,7 +84,6 @@ private:
 
     void add_to_counter(uint64_t& b0, uint64_t& b1, uint64_t& b2, uint64_t val)
     {
-        // Bitwise half-adder logic to increment the 3-bit parallel counter
         uint64_t carry0 = b0 & val;
         b0 ^= val;
         uint64_t carry1 = b1 & carry0;
