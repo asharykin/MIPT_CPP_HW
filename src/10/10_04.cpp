@@ -94,7 +94,6 @@ TEST(FibonacciTest, HandlesSmallValues)
 
 TEST(FibonacciTest, HandlesMaxUint64Case)
 {
-    // F(93) is the largest Fibonacci number that fits into uint64_t
     EXPECT_EQ(fibonacci(93), 12200160415121876738u);
 }
 
