@@ -21,10 +21,12 @@ unsigned char hexchar_to_int(char const ch)
     {
         return ch - '0';
     }
+
     if (ch >= 'a' && ch <= 'f')
     {
         return ch - 'a' + 10;
     }
+
     throw std::invalid_argument("Invalid hexadecimal character");
 }
 
