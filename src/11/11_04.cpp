@@ -34,7 +34,7 @@ Roots solve(double a, double b, double c)
     if (D > 1e-7)
     {
         double sqrtD = std::sqrt(D);
-        return std::make_pair((-b + sqrtD) / (2 * a), (-b - sqrtD) / (2 * a));
+        return std::pair{(-b + sqrtD) / (2 * a), (-b - sqrtD) / (2 * a)};
     }
     return false;
 }
