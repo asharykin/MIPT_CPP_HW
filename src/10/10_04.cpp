@@ -12,7 +12,6 @@ using boost::numeric::ublas::prod;
 
 bounded_matrix<uint64_t, 2, 2> matrix_pow(bounded_matrix<uint64_t, 2, 2> A, unsigned char n)
 {
-    // [ [1, 0], [0, 1] ]
     bounded_matrix<uint64_t, 2, 2> R = identity_matrix<uint64_t>(2);
 
     while (n > 0) {
@@ -29,7 +28,7 @@ uint64_t fibonacci(unsigned char n)
 {
     if (n == 0) return 0;
 
-    bounded_matrix<uint64_t, 2, 2> T = scalar_matrix<uint64_t>(2, 2, 1); // [ [1, 1], [1, 1] ]
+    bounded_matrix<uint64_t, 2, 2> T = scalar_matrix<uint64_t>(2, 2, 1);
     T(1, 1) = 0;
 
     // no need for n calculations, n-1 is enough. (0, 0) is already F(n)
