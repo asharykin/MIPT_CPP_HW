@@ -31,7 +31,6 @@ uint64_t fibonacci(unsigned char n)
     bounded_matrix<uint64_t, 2, 2> T = scalar_matrix<uint64_t>(2, 2, 1);
     T(1, 1) = 0;
 
-    // no need for n calculations, n-1 is enough. (0, 0) is already F(n)
     bounded_matrix<uint64_t, 2, 2> result = matrix_pow(T, n - 1);
     return result(0, 0);
 }
