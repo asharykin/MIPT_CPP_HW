@@ -60,9 +60,11 @@ TEST(FoldTests, Max) {
 }
 
 TEST(FoldTests, Product) {
-    std::vector<int> small_vec{1, 2, 3, 4, 5};
+    std::vector<int> vector(5);
 
-    int result = fold(std::views::all(small_vec), 1, std::multiplies<int>());
+    std::ranges::iota(vector, 1);
+
+    int result = fold(std::views::all(vector), 1, std::multiplies<int>());
 
     EXPECT_EQ(result, 120);
 }
