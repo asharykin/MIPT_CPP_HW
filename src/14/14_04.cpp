@@ -56,6 +56,7 @@ protected:
 
     static constexpr double PI = 3.14159265358979323846;
 };
+
 TEST_F(MonteCarloPiTestFixture, OneMillionPoints)
 {
     double pi = monte_carlo_pi_estimate(1'000'000);
