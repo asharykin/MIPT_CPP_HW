@@ -47,7 +47,8 @@ TEST(FoldTests, Sum)
     EXPECT_EQ(result, 524800);
 }
 
-TEST(FoldTests, Max) {
+TEST(FoldTests, Max)
+{
     std::vector<int> vector(1 << 10);
 
     std::ranges::iota(vector, 1);
@@ -59,7 +60,8 @@ TEST(FoldTests, Max) {
     EXPECT_EQ(result, 1024);
 }
 
-TEST(FoldTests, Product) {
+TEST(FoldTests, Product)
+{
     std::vector<int> vector(5);
 
     std::ranges::iota(vector, 1);
