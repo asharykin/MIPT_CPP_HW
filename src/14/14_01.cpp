@@ -1,4 +1,4 @@
-#include <iostream>
+#include <gtest/gtest.h>
 #include <thread>
 #include <exception>
 #include <stdexcept>
@@ -16,21 +16,32 @@ void func(std::exception_ptr& eptr)
     }
 }
 
-int main() {
-    std::exception_ptr eptr = nullptr;
+TEST(ThreadExceptionTest, CaptureAndRethrowRuntimeError)
+{
+    std::exception_ptr exptr = nullptr;
 
-    std::thread thread1(func, std::ref(eptr));
-    thread1.join();
+    std::thread t(func, std::ref(exptr));
+    t.join();
 
-    if (eptr)
+    ASSERT_NE(exptr, nullptr);
+
+    bool caught_ex = false;
+
+    try
     {
-        try
-        {
-            std::rethrow_exception(eptr);
-        }
-        catch (const std::exception& e)
-        {
-            std::cerr << "Caught exception: " << e.what() << std::endl;
-        }
+        std::rethrow_exception(exptr);
     }
+    catch (const std::runtime_error& ex)
+    {
+        caught_ex = true;
+        ASSERT_STREQ(ex.what(), "Exception from thread1");
+    }
+
+    ASSERT_TRUE(caught_ex);
+}
+
+int main(int argc, char** argv)
+{
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
