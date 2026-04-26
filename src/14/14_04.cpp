@@ -27,6 +27,7 @@ double monte_carlo_pi_estimate(long long total_iterations, unsigned int num_thre
             std::uniform_real_distribution<double> dist(0.0, 1.0);
 
             long long local_inside_points = 0;
+
             for (long long k = 0; k < local_iterations; ++k)
             {
                 double x = dist(gen);
