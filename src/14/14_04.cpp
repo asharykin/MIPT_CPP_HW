@@ -4,7 +4,7 @@
 #include <vector>
 #include <atomic>
 
-double monte_carlo_pi_estimate(long long total_iterations, unsigned int num_threads = std::thread::hardware_concurrency())
+double monte_carlo_pi_estimate(long long total_iterations, unsigned int num_threads = std::thread::hardware_concurrency() - 1)
 {
     std::atomic<long long> total_inside_points(0);
 
