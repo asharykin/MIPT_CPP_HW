@@ -36,13 +36,13 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-template < typename T > auto fold(std::ranges::view auto view, T sum, unsigned int threads)
+template < typename T > auto fold(std::ranges::view auto view, T sum, unsigned int num_threads)
 {
   auto begin = std::begin(view), end = std::end(view);
 
   if (auto size = std::distance(begin, end); size > 0)
   {
-    auto concurrency = threads;
+    auto concurrency = num_threads;
 
     std::vector < std::pair < std::future < T > , std::jthread > > futures(concurrency > 1 ? concurrency - 1 : 0);
 
