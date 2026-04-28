@@ -27,9 +27,9 @@ public:
     {
       auto nd = static_cast<double>(n);
 
-      auto val = nd * (std::sin(nd) * std::sin(nd) + std::cos(nd) * std::cos(nd));
+      nd = nd * (std::sin(nd) * std::sin(nd) + std::cos(nd) * std::cos(nd));
 
-      return sum + std::llround(val);
+      return sum + std::llround(nd);
     });
   }
 };
