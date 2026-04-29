@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <functional>
 
-void func(std::exception_ptr& eptr)
+void func(std::exception_ptr& exptr)
 {
     try
     {
@@ -12,7 +12,7 @@ void func(std::exception_ptr& eptr)
     }
     catch (...)
     {
-        eptr = std::current_exception();
+        exptr = std::current_exception();
     }
 }
 
