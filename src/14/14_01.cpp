@@ -21,6 +21,7 @@ TEST(ThreadExceptionTest, CaptureAndRethrowRuntimeError)
     std::exception_ptr exptr = nullptr;
 
     std::thread t(func, std::ref(exptr));
+
     t.join();
 
     ASSERT_NE(exptr, nullptr);
@@ -34,6 +35,7 @@ TEST(ThreadExceptionTest, CaptureAndRethrowRuntimeError)
     catch (const std::runtime_error& ex)
     {
         caught_ex = true;
+
         ASSERT_STREQ(ex.what(), "Exception from thread1");
     }
 
