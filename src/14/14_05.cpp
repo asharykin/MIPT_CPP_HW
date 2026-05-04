@@ -237,6 +237,7 @@ auto equal(double x, double y, double epsilon = 1e-6)
     return std::abs(x - y) < epsilon;
 }
 
+
 TEST(PoolTest, CorrectResult)
 {
     Pool pool;
@@ -258,6 +259,7 @@ TEST(PoolTest, CorrectResult)
     }
 }
 
+
 TEST(PoolTest, ManyTasks)
 {
     Pool pool;
@@ -276,6 +278,7 @@ TEST(PoolTest, ManyTasks)
         EXPECT_NO_THROW(future.get());
     }
 }
+
 
 int main(int argc, char **argv)
 {
