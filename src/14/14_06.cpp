@@ -3,7 +3,8 @@
 #include <memory>
 #include <gtest/gtest.h>
 
-template<typename T> class LockFreeStack
+template<typename T>
+class LockFreeStack
 {
 public:
 
