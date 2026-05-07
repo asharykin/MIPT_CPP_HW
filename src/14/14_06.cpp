@@ -33,7 +33,7 @@ public:
     {
         std::shared_ptr<Node> old_head = m_head.load();
 
-        while (old_head && !m_head.compare_exchange_weak(old_head, old_head->m_next.load()));
+        while (old_head && !m_head.compare_exchange_weak(old_head, old_head->m_next.load())) { }
 
         if (old_head)
         {
