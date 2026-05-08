@@ -51,7 +51,7 @@ private:
 
         std::atomic<std::shared_ptr<Node>> m_next;
 
-        Node(T const& data) : m_data(std::make_shared<T>(data)) { }
+        explicit Node(T const& data) : m_data(std::make_shared<T>(data)) { }
     };
 
     std::atomic<std::shared_ptr<Node>> m_head;
