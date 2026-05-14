@@ -88,8 +88,10 @@ public:
         std::atomic<bool> active{true};
 
         std::size_t idx;
+
         {
             std::scoped_lock<bip::interprocess_mutex> guard(ctrl->mtx);
+
             idx = stream->size();
         }
 
