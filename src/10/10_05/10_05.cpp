@@ -7,11 +7,14 @@
 #include <functional>
 #include <fstream>
 
-uint32_t process_rs(const std::string& input) {
+uint32_t process_rs(const std::string& input)
+{
     uint32_t magic_b = 378551;
     uint32_t magic_a = 63689;
     uint32_t result = 0;
-    for (char sym : input) {
+
+    for (char sym : input)
+    {
         result = result * magic_a + static_cast<uint32_t>(sym);
         magic_a *= magic_b;
     }
