@@ -27,13 +27,16 @@ float custom_parse_float(const std::string& str, size_t pos, size_t len)
     {
         ptr++;
 
-        double fraction = 0.1;
-        while (ptr < end && *ptr >= '0' && *ptr <= '9')
-        {
-            result += (*ptr - '0') * fraction;
-            fraction /= 10.0;
+        double fraction = 0.0;
+        int divisor = 1;
+
+        while (ptr < end && *ptr >= '0' && *ptr <= '9') {
+            fraction = fraction * 10.0 + (*ptr - '0');
+            divisor *= 10;
             ptr++;
         }
+
+        result += fraction / divisor;
     }
 
     return static_cast<float>(sign * result);
