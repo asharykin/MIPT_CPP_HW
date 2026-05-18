@@ -10,7 +10,7 @@ std::string bytes_to_hexstr(const std::vector<unsigned char>& bytes)
     std::ostringstream oss;
     for (const auto byte : bytes)
     {
-        oss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(byte);
+        oss << std::right << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(byte);
     }
     return oss.str();
 }
