@@ -18,14 +18,19 @@ uint32_t process_rs(const std::string& input)
         result = result * magic_a + static_cast<uint32_t>(sym);
         magic_a *= magic_b;
     }
+
     return result;
 }
 
-uint32_t process_js(const std::string& input) {
+uint32_t process_js(const std::string& input)
+{
     uint32_t acc = 1315423911;
-    for (char sym : input) {
+
+    for (char sym : input)
+    {
         acc ^= ((acc << 5) + sym + (acc >> 2));
     }
+
     return acc;
 }
 
