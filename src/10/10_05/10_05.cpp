@@ -34,16 +34,22 @@ uint32_t process_js(const std::string& input)
     return acc;
 }
 
-uint32_t process_pjw(const std::string& input) {
+uint32_t process_pjw(const std::string& input)
+{
     uint32_t val = 0;
     uint32_t high_bits = 0;
-    for (char sym : input) {
+
+    for (char sym : input)
+    {
         val = (val << 4) + sym;
-        if ((high_bits = val & 0xF0000000) != 0) {
+
+        if ((high_bits = val & 0xF0000000) != 0)
+        {
             val ^= (high_bits >> 24);
             val &= ~high_bits;
         }
     }
+
     return val;
 }
 
