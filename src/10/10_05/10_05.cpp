@@ -53,16 +53,21 @@ uint32_t process_pjw(const std::string& input)
     return val;
 }
 
-uint32_t process_elf(const std::string& input) {
+uint32_t process_elf(const std::string& input)
+{
     uint32_t state = 0;
     uint32_t mask = 0;
-    for (char sym : input) {
+
+    for (char sym : input)
+    {
         state = (state << 4) + sym;
-        if ((mask = state & 0xF0000000) != 0) {
+        if ((mask = state & 0xF0000000) != 0)
+        {
             state ^= (mask >> 24);
         }
         state &= ~mask;
     }
+
     return state;
 }
 
