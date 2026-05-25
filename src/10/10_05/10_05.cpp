@@ -75,9 +75,12 @@ uint32_t process_bkdr(const std::string& input)
 {
     uint32_t multiplier = 131;
     uint32_t res = 0;
-    for (char sym : input) {
+
+    for (char sym : input)
+    {
         res = res * multiplier + sym;
     }
+
     return res;
 }
 
