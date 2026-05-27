@@ -88,9 +88,11 @@ uint32_t process_sdbm(const std::string& input)
 {
     uint32_t hash_val = 0;
 
-    for (char sym : input) {
+    for (char sym : input)
+    {
         hash_val = sym + (hash_val << 6) + (hash_val << 16) - hash_val;
     }
+
     return hash_val;
 }
 
