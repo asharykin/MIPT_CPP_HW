@@ -96,7 +96,8 @@ uint32_t process_sdbm(const std::string& input)
     return hash_val;
 }
 
-uint32_t process_djb(const std::string& input) {
+uint32_t process_djb(const std::string& input)
+{
     uint32_t current = 5381;
     for (char sym : input) {
         current = ((current << 5) + current) + sym;
