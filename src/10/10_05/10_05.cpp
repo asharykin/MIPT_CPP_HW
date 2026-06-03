@@ -99,9 +99,12 @@ uint32_t process_sdbm(const std::string& input)
 uint32_t process_djb(const std::string& input)
 {
     uint32_t current = 5381;
-    for (char sym : input) {
+
+    for (char sym : input)
+    {
         current = ((current << 5) + current) + sym;
     }
+
     return current;
 }
 
