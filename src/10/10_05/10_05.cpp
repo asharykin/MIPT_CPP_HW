@@ -108,7 +108,8 @@ uint32_t process_djb(const std::string& input)
     return current;
 }
 
-uint32_t process_dek(const std::string& input) {
+uint32_t process_dek(const std::string& input)
+{
     uint32_t final_val = static_cast<uint32_t>(input.length());
     for (char sym : input) {
         final_val = ((final_val << 5) ^ (final_val >> 27)) ^ sym;
