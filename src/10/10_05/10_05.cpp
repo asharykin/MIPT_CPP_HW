@@ -116,6 +116,7 @@ uint32_t process_dek(const std::string& input)
     {
         final_val = ((final_val << 5) ^ (final_val >> 27)) ^ sym;
     }
+
     return final_val;
 }
 
