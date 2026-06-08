@@ -124,9 +124,12 @@ uint32_t process_ap(const std::string& input)
 {
     uint32_t h = 0xAAAAAAAA;
 
-    for (size_t idx = 0; idx < input.size(); ++idx) {
+    for (size_t idx = 0; idx < input.size(); ++idx)
+    {
         if ((idx & 1) == 0)
+        {
             h ^= ((h << 7) ^ input[idx] * (h >> 3));
+        }
         else
             h ^= (~((h << 11) + (input[idx] ^ (h >> 5))));
     }
