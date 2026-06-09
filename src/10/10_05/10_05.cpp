@@ -131,8 +131,11 @@ uint32_t process_ap(const std::string& input)
             h ^= ((h << 7) ^ input[idx] * (h >> 3));
         }
         else
+        {
             h ^= (~((h << 11) + (input[idx] ^ (h >> 5))));
+        }
     }
+
     return h;
 }
 
