@@ -142,8 +142,8 @@ uint32_t process_ap(const std::string& input)
 std::vector<std::string> spawn_mock_strings(size_t total, size_t length = 12)
 {
     std::vector<std::string> collection{};
-    std::random_device rd;
-    std::mt19937 engine(rd());
+    std::random_device rd{};
+    std::mt19937 engine{ rd() };
     std::uniform_int_distribution<int> range('A', 'Z');
 
     collection.reserve(total);
