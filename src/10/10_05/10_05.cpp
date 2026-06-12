@@ -147,13 +147,16 @@ std::vector<std::string> spawn_mock_strings(size_t total, size_t length = 12)
     std::uniform_int_distribution<int> range('A', 'Z');
 
     collection.reserve(total);
-    for (size_t i = 0; i < total; ++i) {
+    for (size_t i = 0; i < total; ++i)
+    {
         std::string buffer;
-        for (size_t j = 0; j < length; ++j) {
+        for (size_t j = 0; j < length; ++j)
+        {
             buffer += static_cast<char>(range(engine));
         }
         collection.emplace_back(std::move(buffer));
     }
+
     return collection;
 }
 
