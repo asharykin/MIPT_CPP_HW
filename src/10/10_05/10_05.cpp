@@ -162,9 +162,8 @@ std::vector<std::string> spawn_mock_strings(size_t total, size_t length = 12)
 
 using ChecksumLogic = std::function<uint32_t(const std::string&)>;
 
-size_t analyze_collision_rate(const std::vector<std::string>& payload,
-                              const ChecksumLogic& algo,
-                              uint32_t bucket_size) {
+size_t analyze_collision_rate(const std::vector<std::string>& payload, const ChecksumLogic& algo, uint32_t bucket_size)
+{
     std::unordered_set<uint32_t> unique_slots;
     for (const auto& item : payload) {
         unique_slots.insert(algo(item) % bucket_size);
