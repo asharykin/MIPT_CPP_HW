@@ -175,7 +175,8 @@ size_t analyze_collision_rate(const std::vector<std::string>& payload, const Che
 }
 
 
-TEST(AlgorithmAudit, SanityCheck) {
+TEST(AlgorithmAudit, SanityCheck)
+{
     const std::string sample = "test_vector";
     ASSERT_GT(process_rs(sample), 0u);
     ASSERT_GT(process_djb(sample), 0u);
