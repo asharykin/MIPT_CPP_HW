@@ -183,7 +183,8 @@ TEST(AlgorithmAudit, SanityCheck)
     ASSERT_GT(process_sdbm(sample), 0u);
 }
 
-TEST(AlgorithmAudit, FullBenchmarkSuite) {
+TEST(AlgorithmAudit, FullBenchmarkSuite)
+{
     struct AlgoEntry {
         std::string label;
         ChecksumLogic procedure;
