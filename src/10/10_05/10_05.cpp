@@ -185,12 +185,14 @@ TEST(AlgorithmAudit, SanityCheck)
 
 TEST(AlgorithmAudit, FullBenchmarkSuite)
 {
-    struct AlgoEntry {
+    struct AlgoEntry
+    {
         std::string label;
         ChecksumLogic procedure;
     };
 
-    std::vector<AlgoEntry> registry = {
+    std::vector<AlgoEntry> registry =
+    {
         {"RS_ALGO", process_rs},   {"JS_ALGO", process_js},
         {"PJW_ALGO", process_pjw}, {"ELF_ALGO", process_elf},
         {"BKDR_ALGO", process_bkdr}, {"SDBM_ALGO", process_sdbm},
