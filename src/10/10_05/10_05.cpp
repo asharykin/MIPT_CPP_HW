@@ -203,12 +203,16 @@ TEST(AlgorithmAudit, FullBenchmarkSuite)
     const uint32_t HASH_SPACE = 1024;
     std::ofstream report("benchmark_results.csv");
 
-    if (!report.is_open()) {
+    if (!report.is_open())
+    {
         FAIL() << "Failed to initialize output stream.";
     }
 
     report << "Sample_Size";
-    for (const auto& entry : registry) report << "," << entry.label;
+    for (const auto& entry : registry)
+    {
+        report << "," << entry.label;
+    }
     report << "\n";
 
     for (size_t current_batch = 150; current_batch <= 2500; current_batch += 400) {
