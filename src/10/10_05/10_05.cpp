@@ -215,7 +215,8 @@ TEST(AlgorithmAudit, FullBenchmarkSuite)
     }
     report << "\n";
 
-    for (size_t current_batch = 150; current_batch <= 2500; current_batch += 400) {
+    for (size_t current_batch = 150; current_batch <= 2500; current_batch += 400)
+    {
         auto test_data = spawn_mock_strings(current_batch);
         report << current_batch;
 
