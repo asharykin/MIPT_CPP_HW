@@ -220,7 +220,8 @@ TEST(AlgorithmAudit, FullBenchmarkSuite)
         auto test_data = spawn_mock_strings(current_batch);
         report << current_batch;
 
-        for (auto& item : registry) {
+        for (auto& item : registry)
+        {
             size_t conflicts = analyze_collision_rate(test_data, item.procedure, HASH_SPACE);
             report << "," << conflicts;
         }
