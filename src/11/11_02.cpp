@@ -23,6 +23,7 @@ class Base
 public:
 
     virtual ~Base() = default;
+
     virtual int virtual_function(int x) = 0;
 };
 
