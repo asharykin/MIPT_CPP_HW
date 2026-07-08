@@ -75,7 +75,8 @@ TEST(CustomAlgorithmsTest, TransformIfCombinedTest) {
     EXPECT_EQ(result, expected);
 }
 
-double calculate_mae(const std::vector<double>& actual, const std::vector<double>& predicted) {
+double calculate_mae(const std::vector<double>& actual, const std::vector<double>& predicted)
+{
     if (actual.empty() || actual.size() != predicted.size()) return 0.0;
     std::vector<double> diffs;
     diffs.reserve(actual.size());
