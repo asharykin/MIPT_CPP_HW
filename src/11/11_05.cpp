@@ -7,7 +7,8 @@
 #include <gtest/gtest.h>
 
 
-TEST(RangesAlgorithmsTest, ReplaceTest) {
+TEST(RangesAlgorithmsTest, ReplaceTest)
+{
     std::vector<int> v = {1, 2, 3, 2, 4};
     std::ranges::replace(v, 2, 99);
 
@@ -15,7 +16,8 @@ TEST(RangesAlgorithmsTest, ReplaceTest) {
     EXPECT_EQ(v, expected);
 }
 
-TEST(RangesAlgorithmsTest, FillTest) {
+TEST(RangesAlgorithmsTest, FillTest)
+{
     std::vector<int> v(5);
     std::ranges::fill(v, 10);
 
