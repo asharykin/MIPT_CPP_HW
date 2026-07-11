@@ -26,7 +26,8 @@ TEST(RangesAlgorithmsTest, FillTest)
     }
 }
 
-TEST(RangesAlgorithmsTest, UniqueTest) {
+TEST(RangesAlgorithmsTest, UniqueTest)
+{
     std::vector<int> v = {1, 1, 2, 2, 3, 1, 1};
     auto [first, last] = std::ranges::unique(v);
     v.erase(first, last);
