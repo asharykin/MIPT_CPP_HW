@@ -21,7 +21,8 @@ TEST(RangesAlgorithmsTest, FillTest)
     std::vector<int> v(5);
     std::ranges::fill(v, 10);
 
-    for (int n : v) {
+    for (int n : v)
+    {
         EXPECT_EQ(n, 10);
     }
 }
