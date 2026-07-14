@@ -37,7 +37,8 @@ TEST(RangesAlgorithmsTest, UniqueTest)
     EXPECT_EQ(v, expected);
 }
 
-TEST(RangesAlgorithmsTest, RotateTest) {
+TEST(RangesAlgorithmsTest, RotateTest)
+{
     std::vector<int> v = {1, 2, 3, 4, 5};
     auto it = std::ranges::find(v, 3);
     std::ranges::rotate(v, it);
