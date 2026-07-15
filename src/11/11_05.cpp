@@ -47,7 +47,8 @@ TEST(RangesAlgorithmsTest, RotateTest)
     EXPECT_EQ(v, expected);
 }
 
-TEST(RangesAlgorithmsTest, SampleTest) {
+TEST(RangesAlgorithmsTest, SampleTest)
+{
     std::vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     std::vector<int> out;
     std::mt19937 gen{std::random_device{}()};
@@ -55,7 +56,8 @@ TEST(RangesAlgorithmsTest, SampleTest) {
     std::ranges::sample(v, std::back_inserter(out), 3, gen);
 
     EXPECT_EQ(out.size(), 3);
-    for (int n : out) {
+    for (int n : out)
+    {
         EXPECT_TRUE(std::ranges::contains(v, n));
     }
 }
