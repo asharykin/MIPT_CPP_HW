@@ -69,7 +69,8 @@ auto transform_if(const std::vector<int>& r, std::back_insert_iterator<std::vect
     return std::ranges::transform(temp, result, op).out;
 }
 
-TEST(CustomAlgorithmsTest, TransformIfCombinedTest) {
+TEST(CustomAlgorithmsTest, TransformIfCombinedTest)
+{
     std::vector<int> v = {1, 2, 3, 4, 5, 6};
     std::vector<int> result;
 
