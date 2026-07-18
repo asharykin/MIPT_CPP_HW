@@ -74,10 +74,7 @@ TEST(CustomAlgorithmsTest, TransformIfCombinedTest)
     std::vector<int> v = {1, 2, 3, 4, 5, 6};
     std::vector<int> result;
 
-    transform_if(v, std::back_inserter(result),
-                 [](int n) { return n % 2 == 0; },
-                 [](int n) { return n * n; }
-    );
+    transform_if(v, std::back_inserter(result), [](int n) { return n % 2 == 0; }, [](int n) { return n * n; });
 
     std::vector<int> expected = {4, 16, 36};
     EXPECT_EQ(result, expected);
@@ -85,7 +82,10 @@ TEST(CustomAlgorithmsTest, TransformIfCombinedTest)
 
 double calculate_mae(const std::vector<double>& actual, const std::vector<double>& predicted)
 {
-    if (actual.empty() || actual.size() != predicted.size()) return 0.0;
+    if (actual.empty() || actual.size() != predicted.size())
+    {
+        return 0.0;
+    }
     std::vector<double> diffs;
     diffs.reserve(actual.size());
     std::transform(actual.begin(), actual.end(), predicted.begin(), std::back_inserter(diffs),
