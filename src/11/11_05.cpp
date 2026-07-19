@@ -94,8 +94,11 @@ double calculate_mae(const std::vector<double>& actual, const std::vector<double
     return sum / actual.size();
 }
 
-double calculate_mse(const std::vector<double>& actual, const std::vector<double>& predicted) {
-    if (actual.empty() || actual.size() != predicted.size()) return 0.0;
+double calculate_mse(const std::vector<double>& actual, const std::vector<double>& predicted)
+{
+    if (actual.empty() || actual.size() != predicted.size()) {
+        return 0.0;
+    }
     std::vector<double> sq_diffs;
     sq_diffs.reserve(actual.size());
     std::transform(actual.begin(), actual.end(), predicted.begin(), std::back_inserter(sq_diffs),
