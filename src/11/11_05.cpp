@@ -96,7 +96,8 @@ double calculate_mae(const std::vector<double>& actual, const std::vector<double
 
 double calculate_mse(const std::vector<double>& actual, const std::vector<double>& predicted)
 {
-    if (actual.empty() || actual.size() != predicted.size()) {
+    if (actual.empty() || actual.size() != predicted.size())
+    {
         return 0.0;
     }
     std::vector<double> sq_diffs;
@@ -110,7 +111,8 @@ double calculate_mse(const std::vector<double>& actual, const std::vector<double
     return sum / actual.size();
 }
 
-TEST(ErrorMetricsTest, MAETest) {
+TEST(ErrorMetricsTest, MAETest)
+{
     std::vector<double> actual = {1.0, 2.0, 3.0, 4.0};
     std::vector<double> predicted = {1.5, 2.5, 2.5, 4.5};
 
@@ -118,7 +120,8 @@ TEST(ErrorMetricsTest, MAETest) {
     EXPECT_NEAR(mae, 0.5, 1e-9);
 }
 
-TEST(ErrorMetricsTest, MSETest) {
+TEST(ErrorMetricsTest, MSETest)
+{
     std::vector<double> actual = {1.0, 2.0, 3.0, 4.0};
     std::vector<double> predicted = {1.5, 2.5, 2.5, 4.5};
 
