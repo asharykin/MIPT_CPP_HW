@@ -266,6 +266,7 @@ TEST(FibonacciViewTest, SequenceTest)
 {
     Fibonacci fib(7);
     std::vector<int> result;
+
     for (int val : fib)
     {
         result.push_back(val);
