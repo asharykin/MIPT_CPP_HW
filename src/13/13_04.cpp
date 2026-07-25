@@ -45,7 +45,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-auto make_type(std::filesystem::file_status const & status)
+auto make_type(std::filesystem::file_status const& status)
 {
     if (std::filesystem::is_directory   (status)) { return 'd'; }
 
