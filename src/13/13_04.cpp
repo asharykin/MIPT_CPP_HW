@@ -62,7 +62,7 @@ auto make_permissions(std::filesystem::perms permissions) -> std::string
 {
     auto lambda = [permissions](auto x, auto y)
     {
-        return (permissions & x) == std::filesystem::perms::none ? '-' : y;
+        return (permissions& x) == std::filesystem::perms::none ? '-' : y;
     };
 
     return
