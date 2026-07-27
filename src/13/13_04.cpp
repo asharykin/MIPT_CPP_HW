@@ -77,7 +77,7 @@ auto make_permissions(std::filesystem::perms permissions) -> std::string
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-auto size(std::filesystem::path const & path)
+auto size(std::filesystem::path const& path)
 {
 	auto size = 0uz;
 
