@@ -83,7 +83,7 @@ auto size(std::filesystem::path const& path)
 
 	if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
 	{
-		for (auto const & entry : std::filesystem::recursive_directory_iterator(path))
+		for (auto const& entry : std::filesystem::recursive_directory_iterator(path))
 		{
 			if (!std::filesystem::is_directory(entry.status()))
 			{
