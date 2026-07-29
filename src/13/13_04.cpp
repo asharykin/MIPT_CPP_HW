@@ -97,7 +97,7 @@ auto size(std::filesystem::path const& path)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-auto size(std::filesystem::directory_entry const & entry)
+auto size(std::filesystem::directory_entry const& entry)
 {
     auto size = 0uz;
 
