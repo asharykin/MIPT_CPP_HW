@@ -124,7 +124,7 @@ auto size(std::filesystem::directory_entry const& entry)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void show(std::filesystem::path const & path, std::regex const & pattern)
+void show(std::filesystem::path const& path, std::regex const& pattern)
 {
 	if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
 	{
