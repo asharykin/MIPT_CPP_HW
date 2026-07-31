@@ -128,7 +128,7 @@ void show(std::filesystem::path const& path, std::regex const& pattern)
 {
 	if (std::filesystem::exists(path) && std::filesystem::is_directory(path))
 	{
-		for (auto const & entry : std::filesystem::directory_iterator(path))
+		for (auto const& entry : std::filesystem::directory_iterator(path))
 		{
 			if (std::regex_search(entry.path().filename().string(), pattern))
 			{
