@@ -47,11 +47,20 @@
 
 auto make_type(std::filesystem::file_status const& status)
 {
-    if (std::filesystem::is_directory (status)) { return 'd'; }
+    if (std::filesystem::is_directory (status))
+    {
+	    return 'd';
+    }
 
-    if (std::filesystem::is_regular_file(status)) { return 'f'; }
+    if (std::filesystem::is_regular_file(status))
+    {
+	    return 'f';
+    }
 
-    if (std::filesystem::is_symlink (status)) { return 'l'; }
+    if (std::filesystem::is_symlink (status))
+    {
+	    return 'l';
+    }
 
     return '?';
 }
