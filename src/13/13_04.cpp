@@ -151,10 +151,7 @@ void show(std::filesystem::path const& path, std::regex const& pattern)
 
 					size(entry),
 
-					std::chrono::floor < std::chrono::seconds >
-					(
-						std::chrono::file_clock::to_sys(entry.last_write_time())
-					),
+					std::chrono::floor<std::chrono::seconds>(std::chrono::file_clock::to_sys(entry.last_write_time())),
 
 					entry.path().filename().string()
 				);
