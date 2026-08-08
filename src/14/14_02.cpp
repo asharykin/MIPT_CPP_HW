@@ -9,7 +9,7 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-template < std::ranges::view V, typename T, typename Op >
+template <std::ranges::view V, typename T, typename Op>
 auto fold(V view, T init, Op op) -> T
 {
     auto begin = std::begin(view), end = std::end(view);
