@@ -9,7 +9,7 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-template <std::ranges::view V, typename T, typename Op>
+template<std::ranges::view V, typename T, typename Op>
 auto fold(V view, T init, Op op) -> T
 {
     auto begin = std::begin(view), end = std::end(view);
@@ -18,7 +18,7 @@ auto fold(V view, T init, Op op) -> T
     {
         std::ranges::subrange range(begin, std::next(begin, half));
 
-        auto future = std::async(fold < decltype(range), T, Op > , range, T(), op);
+        auto future = std::async(fold <decltype(range), T, Op> , range, T(), op);
 
         T right_part = fold(std::ranges::subrange(std::end(range), end), T(), op);
 
