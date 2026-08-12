@@ -24,12 +24,10 @@ auto fold(V view, T init, Op op) -> T
 
         return op(init, op(future.get(), right_part));
     }
-    else
-    {
-        auto res = std::ranges::fold_left_first(view, op);
 
-        return res ? op(init, *res) : init;
-    }
+    auto res = std::ranges::fold_left_first(view, op);
+
+    return res ? op(init, *res) : init;
 }
 ///////////////////////////////////////////////////////////////////////////
 
