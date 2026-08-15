@@ -53,7 +53,7 @@ template < typename T > auto fold(std::ranges::view auto view, T sum, unsigned i
     {
       auto range = std::ranges::subrange(begin, std::next(begin, step));
 
-      std::packaged_task < T(decltype(range)) > task { Task < decltype(range) > () };
+      std::packaged_task <T(decltype(range))> task { Task <decltype(range)> () };
 
       future = task.get_future();
 
