@@ -64,7 +64,7 @@ template < typename T > auto fold(std::ranges::view auto view, T sum, unsigned i
 
     auto range = std::ranges::subrange(begin, end);
 
-    sum += Task < decltype(range) > ()(range);
+    sum += Task <decltype(range)>()(range);
 
     for (auto & [future, thread] : futures)
     {
