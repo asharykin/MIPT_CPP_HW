@@ -55,6 +55,7 @@ public:
     }
 
 private:
+
     using clock_t = std::chrono::steady_clock;
 
     std::string m_scope;
