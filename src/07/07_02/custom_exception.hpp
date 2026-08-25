@@ -4,7 +4,7 @@
 
 class Exception : public std::exception
 {
-public :
+public:
 
     Exception() = default;
 
