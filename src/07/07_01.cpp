@@ -1,4 +1,4 @@
-#include <iostream>
+7#include <iostream>
 #include <cmath>
 #include <optional>
 #include <variant>
@@ -61,6 +61,7 @@ int main()
     assert(!solve(1.0, -2.0, 3.0).has_value());
     // 1*x^2 - 2*x + 1 = 0; x = 1
     assert(equals( std::get<double>( solve(1.0, -2.0, 1.0).value() ), 1.0 ));
+    
     // 1*x^2 - 2*x + 0 = 0; x1 = 2, x2 = 0
     double x1 = std::get< std::pair<double, double> >( solve(1.0, -2.0, 0.0).value() ).first;
     double x2 = std::get< std::pair<double, double> >( solve(1.0, -2.0, 0.0).value() ).second;
