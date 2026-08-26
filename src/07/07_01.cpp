@@ -1,4 +1,4 @@
-7#include <iostream>
+#include <iostream>
 #include <cmath>
 #include <optional>
 #include <variant>
