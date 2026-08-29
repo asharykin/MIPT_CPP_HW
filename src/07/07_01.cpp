@@ -53,6 +53,7 @@ int main()
 {
     // 0*x^2 + 0*x + 0 = 0; infinitely many roots
     assert(std::holds_alternative<std::monostate>( solve(0.0, 0.0, 0.0).value() ));
+    
     // 0*x^2 + 0*x + 2 = 0; no roots
     assert(!solve(0.0, 0.0, 2.0).has_value());
     // 0*x^2 + 1*x - 2 = 0; x = 2
