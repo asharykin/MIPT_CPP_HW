@@ -59,6 +59,7 @@ int main()
     
     // 0*x^2 + 1*x - 2 = 0; x = 2
     assert(equals( std::get<double>( solve(0.0, 1.0, -2.0).value() ), 2.0 ));
+    
     // 1*x^2 - 2*x + 3 = 0; no roots
     assert(!solve(1.0, -2.0, 3.0).has_value());
     // 1*x^2 - 2*x + 1 = 0; x = 1
