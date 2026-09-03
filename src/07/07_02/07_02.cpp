@@ -114,7 +114,8 @@ int main()
     stream_2 << x;
     assert(stream_2.str() == stream_1.str());
 
-    try {
+    try 
+    {
         Rational q = Rational(3, 0);
     }
     catch (std::exception const& exception)
