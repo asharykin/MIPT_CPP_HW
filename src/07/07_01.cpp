@@ -11,7 +11,8 @@ bool equals(double x, double y, double epsilon = 0.00001)
     return std::abs(x - y) < epsilon;
 }
 
-bool greater_than(double x, double y, double epsilon = 0.00001) {
+bool greater_than(double x, double y, double epsilon = 0.00001) 
+{
     return x - y > epsilon;
 }
 
