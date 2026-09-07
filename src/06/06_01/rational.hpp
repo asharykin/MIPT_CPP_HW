@@ -35,6 +35,7 @@ public:
     friend std::ostream& operator<<(std::ostream& stream, Rational const& rational);
 
 private:
+
     int m_num;
     int m_den;
 };
