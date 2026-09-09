@@ -6,6 +6,7 @@
 class Rational
 {
 public:
+
     Rational(int num = 0, int den = 1) : m_num(num), m_den(den) { reduce(); }
 
     explicit operator double() const { return static_cast<double>(m_num) / m_den; }
