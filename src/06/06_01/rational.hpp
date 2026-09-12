@@ -12,7 +12,10 @@ public:
         reduce(); 
     }
 
-    explicit operator double() const { return static_cast<double>(m_num) / m_den; }
+    explicit operator double() const 
+    { 
+        return static_cast<double>(m_num) / m_den; 
+    }
 
     void reduce();
 
