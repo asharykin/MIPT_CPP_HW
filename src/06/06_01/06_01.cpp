@@ -45,6 +45,7 @@ int main()
 
     std::stringstream stream_1("1/2");
     std::stringstream stream_2;
+    
     stream_1 >> x;
     stream_2 << x;
     assert(stream_2.str() == stream_1.str());
