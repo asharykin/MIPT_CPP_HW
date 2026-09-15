@@ -5,6 +5,7 @@
 class Person
 {
 public:
+
     std::string name {};
     int age = 0;
     int grade = 0;
