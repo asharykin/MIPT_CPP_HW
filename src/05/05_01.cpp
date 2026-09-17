@@ -14,6 +14,7 @@ public:
 class Builder
 {
 public:
+
     Builder() : m_person(new Person()) { };
 
     Builder& name(std::string const& name)
