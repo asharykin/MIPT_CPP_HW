@@ -41,6 +41,7 @@ public:
     }
 
 private:
+
     Person* m_person = nullptr;
 };
 
