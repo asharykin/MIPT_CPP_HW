@@ -16,6 +16,7 @@ public:
 class Unit : public GameObject
 {
 public:
+
     void performAction() override
     {
         attack();
@@ -24,7 +25,9 @@ public:
     }
 
 protected:
+
     virtual void attack() = 0;
+
     virtual void move()
     {
         std::cout << "Unit moves." << std::endl;
