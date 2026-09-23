@@ -42,6 +42,7 @@ protected:
 class Archer : public Unit
 {
 public:
+
     void info() override
     {
         std::cout << "This is an archer." << std::endl;
