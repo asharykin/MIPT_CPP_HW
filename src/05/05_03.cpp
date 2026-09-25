@@ -49,6 +49,7 @@ public:
     }
 
 protected:
+
     void attack() override
     {
         std::cout << "Archer shoots an arrow." << std::endl;
