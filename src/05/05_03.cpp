@@ -59,6 +59,7 @@ protected:
 class Knight : public Unit
 {
 public:
+
     void info() override
     {
         std::cout << "This is a knight." << std::endl;
