@@ -66,6 +66,7 @@ public:
     }
 
 protected:
+
     void attack() override
     {
         std::cout << "Knight charges with a lance." << std::endl;
