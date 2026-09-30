@@ -83,6 +83,7 @@ public:
     }
 
 protected:
+
     virtual void construct() = 0;
     virtual void defend()
     {
