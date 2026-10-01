@@ -76,6 +76,7 @@ protected:
 class Building : public GameObject
 {
 public:
+
     void performAction() override
     {
         construct();
