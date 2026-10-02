@@ -86,6 +86,7 @@ public:
 protected:
 
     virtual void construct() = 0;
+
     virtual void defend()
     {
         std::cout << "Building is being defended." << std::endl;
