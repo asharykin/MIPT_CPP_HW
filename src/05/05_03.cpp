@@ -96,6 +96,7 @@ protected:
 class Barrack : public Building
 {
 public:
+
     void info() override
     {
         std::cout << "This is a barrack." << std::endl;
