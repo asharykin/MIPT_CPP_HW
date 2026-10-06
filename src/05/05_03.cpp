@@ -103,6 +103,7 @@ public:
     }
 
 protected:
+
     void construct() override
     {
         std::cout << "Barrack is under construction, preparing to train units." << std::endl;
