@@ -113,6 +113,7 @@ protected:
 class Castle : public Building
 {
 public:
+
     void info() override
     {
         std::cout << "This is a castle." << std::endl;
