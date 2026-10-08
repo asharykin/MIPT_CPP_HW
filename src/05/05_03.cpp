@@ -120,6 +120,7 @@ public:
     }
 
 protected:
+
     void construct() override
     {
         std::cout << "Castle is under construction, fortifying defenses." << std::endl;
