@@ -130,6 +130,7 @@ protected:
 class GameObjectFactory
 {
 public:
+
     virtual ~GameObjectFactory() = default;
 
     virtual Unit* createUnit() = 0;
