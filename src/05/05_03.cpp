@@ -140,6 +140,7 @@ public:
 class ArcherFactory : public GameObjectFactory
 {
 public:
+
     Unit* createUnit() override
     {
         return new Archer();
