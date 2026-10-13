@@ -155,6 +155,7 @@ public:
 class KnightFactory : public GameObjectFactory
 {
 public:
+
     Unit* createUnit() override
     {
         return new Knight();
