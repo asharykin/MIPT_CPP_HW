@@ -170,6 +170,7 @@ public:
 class CompositeGameObject : public GameObject
 {
 public:
+
     void add(GameObject* child)
     {
         m_children.push_back(child);
