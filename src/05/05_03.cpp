@@ -203,6 +203,7 @@ public:
     }
 
 private:
+
     std::vector<GameObject*> m_children;
 };
 
