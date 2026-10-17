@@ -4,6 +4,7 @@
 class Client
 {
 public :
+
     std::string test() const
     {
         return "Client::test";
