@@ -28,6 +28,7 @@ public:
     }
 
 private:
+
     double m_a;
     double m_b;
     double m_c;
