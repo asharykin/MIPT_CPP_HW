@@ -37,6 +37,7 @@ private:
 class Square
 {
 public:
+
     Square(double side) : m_side(side > 0.0 ? side : 0.0) {}
 
     double perimeter() const
