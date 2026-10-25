@@ -51,6 +51,7 @@ public:
     }
 
 private:
+
     double m_side;
 };
 
