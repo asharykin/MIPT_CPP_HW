@@ -58,6 +58,7 @@ private:
 class Circle
 {
 public:
+
     Circle(double radius) : m_radius(radius > 0.0 ? radius : 0.0) {}
 
     double perimeter() const
