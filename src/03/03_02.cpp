@@ -72,6 +72,7 @@ public:
     }
 
 private:
+
     double m_radius;
 };
 
