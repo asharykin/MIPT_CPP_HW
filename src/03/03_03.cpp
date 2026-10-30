@@ -4,6 +4,7 @@
 class List
 {
 public:
+
     ~List()
     {
         while (!empty())
