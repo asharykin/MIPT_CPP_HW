@@ -114,6 +114,7 @@ public:
     }
 
 private:
+
     struct Node
     {
         int m_value;
