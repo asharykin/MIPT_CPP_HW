@@ -104,6 +104,7 @@ public:
         Node* slow = m_head;
         Node* fast = m_head;
         Node* prev = nullptr;
+        
         while (fast != nullptr && fast->m_next != nullptr)
         {
             prev = slow;
