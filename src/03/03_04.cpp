@@ -3,6 +3,7 @@
 class Entity
 {
 private:
+
     static int test_v1()
     {
         return 1;
