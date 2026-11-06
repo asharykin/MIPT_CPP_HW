@@ -21,6 +21,7 @@ private:
 class Attorney_v1
 {
 private:
+
     static int test_v1()
     {
         return Entity::test_v1();
