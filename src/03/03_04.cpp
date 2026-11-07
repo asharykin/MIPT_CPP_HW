@@ -33,6 +33,7 @@ private:
 class Attorney_v2
 {
 private:
+
     static int test_v2()
     {
         return Entity::test_v2();
