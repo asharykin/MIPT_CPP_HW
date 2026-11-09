@@ -45,6 +45,7 @@ private:
 class Tester_v1
 {
 public:
+
     static int test_v1()
     {
         return Attorney_v1::test_v1();
