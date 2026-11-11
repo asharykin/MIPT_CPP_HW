@@ -3,6 +3,7 @@
 class Entity_v1
 {
 public:
+
     virtual ~Entity_v1() = default;
 
     virtual int test()
