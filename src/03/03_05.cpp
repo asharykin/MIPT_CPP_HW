@@ -15,6 +15,7 @@ public:
 class Entity_v2
 {
 public:
+
     virtual ~Entity_v2() = default;
 
     virtual int test()
