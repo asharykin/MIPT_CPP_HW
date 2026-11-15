@@ -27,12 +27,14 @@ public:
 class Adapter_v1 : public Entity_v1
 {
 protected:
+
     virtual int test_v1()
     {
         return 11;
     }
 
 public:
+
     ~Adapter_v1() = default;
 
     int test() override
