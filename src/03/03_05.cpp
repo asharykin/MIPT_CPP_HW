@@ -46,6 +46,7 @@ public:
 class Adapter_v2 : public Entity_v2
 {
 protected:
+
     virtual int test_v2()
     {
         return 22;
