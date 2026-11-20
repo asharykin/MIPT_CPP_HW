@@ -53,6 +53,7 @@ protected:
     }
 
 public:
+
     ~Adapter_v2() = default;
 
     int test() override
