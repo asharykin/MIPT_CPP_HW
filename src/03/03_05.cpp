@@ -66,6 +66,7 @@ public:
 class Client : public Adapter_v1, public Adapter_v2
 {
 public:
+
     ~Client() = default;
 
     int test_v1() override
