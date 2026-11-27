@@ -15,6 +15,7 @@ public:
 class Triangle : public Shape
 {
 public:
+
     Triangle(double a, double b, double c) : m_a(a), m_b(b), m_c(c)
     {
         if (m_a <= 0.0 || m_b <= 0.0 || m_c <= 0.0 ||
